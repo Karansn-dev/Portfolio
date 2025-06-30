@@ -1,0 +1,43 @@
+.scroll-float {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 2.5rem;
+  background: linear-gradient(90deg, #7f5fff 0%, #5ce1e6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  letter-spacing: 0.02em;
+  margin: 0;
+  padding: 0.2em 0;
+}
+
+.scroll-float-text {
+  display: inline-block;
+}
+
+.char {
+  display: inline-block;
+  will-change: opacity, transform;
+  transition: opacity 0.3s, transform 0.3s;
+  filter: drop-shadow(0 2px 8px #7f5fff44);
+}
+
+.word {
+  display: inline-block;
+  margin-right: 0.5em;
+  will-change: opacity, transform;
+  transition: opacity 0.3s, transform 0.3s;
+  filter: drop-shadow(0 2px 8px #7f5fff44);
+}
+
+.hover-card {
+  transition: all 0.3s ease-in-out;
+  border-radius: 12px;
+}
+.hover-card:hover, .hover-card:active {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(127, 90, 240, 0.25);
+  cursor: pointer;
+}

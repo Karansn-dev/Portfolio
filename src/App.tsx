@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Users, 
   Mail, 
@@ -8,26 +8,27 @@ import {
   Linkedin, 
   Code,
   Palette,
-  Globe,
   Zap,
   ArrowRight,
   Star,
   Award,
   Target,
-  Sparkles,
   Rocket,
-  Shield,
   Heart,
   Menu,
   X,
   Trophy,
-  Hammer
+  TrendingUp,
+  Blocks,
+  Smile,
+  BadgeCheck,
+  TerminalSquare,
+  Send
 } from 'lucide-react';
 import AnimatedBackground from './components/AnimatedBackground';
-import Simple3DBackground from './components/Simple3DBackground';
-import ParticleField3D from './components/ParticleField3D';
-import GeometricShapes3D from './components/GeometricShapes3D';
-import InteractiveCard3D from './components/InteractiveCard3D';
+import ScrollFloat from './components/ScrollFloat';
+import Dock from './components/Dock';
+import AchievementCard from './components/AchievementCard';
 
 interface TeamMember {
   id: number;
@@ -47,8 +48,7 @@ const teamMembers: TeamMember[] = [
     id: 1,
     name: "Krishnav Talukdar",
     role: "ML Developer",
-    // LinkedIn profile photo - using a professional tech-focused image
-    image: "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=400",
+    image: "/krishnav.jpeg",
     bio: "Passionate Machine Learning Developer with expertise in AI/ML algorithms, data science, and building intelligent systems that solve real-world problems.",
     skills: ["Machine Learning", "Python", "TensorFlow", "Data Science"],
     social: {
@@ -60,8 +60,7 @@ const teamMembers: TeamMember[] = [
     id: 2,
     name: "Karan Singh Negi",
     role: "UI/UX Designer & Frontend Developer",
-    // LinkedIn profile photo - using a creative designer-focused image
-    image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400",
+    image: "/karan.jpeg",
     bio: "Creative UI/UX Designer and Frontend Developer specializing in creating beautiful, user-centered digital experiences with modern web technologies.",
     skills: ["UI/UX Design", "React", "Figma", "Frontend Development"],
     social: {
@@ -71,14 +70,14 @@ const teamMembers: TeamMember[] = [
   },
   {
     id: 3,
-    name: "Priya",
+    name: "Priya Singh",
     role: "Backend Developer",
-    image: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=400",
+    image: "priya singh.jpeg",
     bio: "Experienced Backend Developer focused on building scalable server-side applications and robust API architectures for modern web solutions.",
     skills: ["Node.js", "Python", "Database Design", "API Development"],
     social: {
-      github: "https://github.com/alexrivera",
-      linkedin: "https://linkedin.com/in/alexrivera"
+      github: "https://github.com/Priya-995",
+      linkedin: "https://www.linkedin.com/in/priya-singh-bb4a09303/"
     }
   }
 ];
@@ -97,7 +96,7 @@ const services = [
     color: "from-pink-400 to-purple-500"
   },
   {
-    icon: Globe,
+    icon: TrendingUp,
     title: "Digital Strategy",
     description: "Comprehensive digital solutions to help your business thrive online.",
     color: "from-green-400 to-emerald-500"
@@ -128,7 +127,7 @@ const achievements = [
     description: "Championship victories achieved"
   },
   { 
-    icon: Hammer, 
+    icon: Blocks, 
     number: "15+", 
     label: "Projects Built", 
     color: "text-yellow-400",
@@ -136,7 +135,7 @@ const achievements = [
     description: "Successful projects delivered"
   },
   { 
-    icon: Users, 
+    icon: Smile, 
     number: "100+", 
     label: "Happy Clients", 
     color: "text-green-400",
@@ -145,11 +144,39 @@ const achievements = [
   }
 ];
 
+// Custom hook for reveal-on-scroll
+function useRevealOnScroll(threshold = 0.15) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    const observer = new window.IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setVisible(true);
+      },
+      { threshold }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [threshold]);
+
+  return [ref, visible] as const;
+}
+
 function App() {
   const [isVisible, setIsVisible] = useState(false);
   const [activeService, setActiveService] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+
+  // For each section, use the hook
+  const [heroRef, heroVisible] = useRevealOnScroll();
+  const [aboutRef, aboutVisible] = useRevealOnScroll();
+  const [teamRef, teamVisible] = useRevealOnScroll();
+  const [servicesRef, servicesVisible] = useRevealOnScroll();
+  const [contactRef, contactVisible] = useRevealOnScroll();
 
   useEffect(() => {
     setIsVisible(true);
@@ -175,92 +202,19 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      {/* Animated Background */}
+      <Dock />
       <AnimatedBackground />
-      
-      {/* 3D Particle Field Background */}
-      <ParticleField3D />
       
       {/* Content */}
       <div className="relative z-10">
-        {/* Navigation */}
-        <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-          scrollY > 50 ? 'bg-black/30 backdrop-blur-xl border-b border-cyan-500/20' : 'bg-transparent'
-        }`}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center py-4">
-              <button 
-                onClick={scrollToTop}
-                className="flex items-center space-x-3 group cursor-pointer transition-all duration-300 hover:scale-105"
-              >
-                <div className="relative">
-                  <div className="w-10 h-10 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/25 group-hover:shadow-cyan-500/40 transition-all duration-300">
-                    <Sparkles className="w-6 h-6 text-white animate-pulse" />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-xl blur-md opacity-50 animate-pulse group-hover:opacity-70 transition-opacity duration-300"></div>
-                </div>
-                <div>
-                  <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent group-hover:from-cyan-300 group-hover:to-purple-300 transition-all duration-300">
-                    Team CyberConqueror
-                  </span>
-                  <div className="text-xs text-cyan-300/70 font-medium group-hover:text-cyan-300/90 transition-colors duration-300">Digital Innovators</div>
-                </div>
-              </button>
-              
-              {/* Desktop Menu */}
-              <div className="hidden md:flex space-x-8">
-                {['Home', 'About', 'Team', 'Services', 'Contact'].map((item) => (
-                  <a 
-                    key={item}
-                    href={`#${item.toLowerCase()}`} 
-                    className="relative text-white/80 hover:text-cyan-400 transition-all duration-300 font-medium group"
-                  >
-                    {item}
-                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-400 group-hover:w-full transition-all duration-300"></span>
-                  </a>
-                ))}
-              </div>
-
-              {/* Mobile Menu Button */}
-              <button 
-                className="md:hidden text-white p-2"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              >
-                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-            </div>
-          </div>
-
-          {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <div className="md:hidden bg-black/90 backdrop-blur-xl border-t border-cyan-500/20">
-              <div className="px-4 py-6 space-y-4">
-                {['Home', 'About', 'Team', 'Services', 'Contact'].map((item) => (
-                  <a 
-                    key={item}
-                    href={`#${item.toLowerCase()}`} 
-                    className="block text-white/80 hover:text-cyan-400 transition-colors font-medium"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {item}
-                  </a>
-                ))}
-              </div>
-            </div>
-          )}
-        </nav>
-
         {/* Hero Section */}
-        <section id="home" className="pt-24 pb-20 px-4 min-h-screen flex items-center">
+        <section
+          id="home"
+          ref={heroRef}
+          className={`pt-24 pb-20 px-4 min-h-screen flex items-center transition-all duration-700 ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+        >
           <div className="max-w-7xl mx-auto text-center w-full">
             <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <div className="mb-8">
-                <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 backdrop-blur-sm border border-cyan-500/20 rounded-full px-6 py-3 mb-6">
-                  <Star className="w-5 h-5 text-cyan-400 animate-pulse" />
-                  <span className="text-cyan-300 font-medium">Welcome to the Digital Realm</span>
-                </div>
-              </div>
-              
               <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight">
                 <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-pulse">
                   Team CyberConqueror
@@ -328,17 +282,16 @@ function App() {
                   );
                 })}
               </div>
-
-              {/* 3D Geometric Shapes */}
-              <div className="mt-16 max-w-4xl mx-auto">
-                <GeometricShapes3D />
-              </div>
             </div>
           </div>
         </section>
 
         {/* About Section */}
-        <section id="about" className="py-20 px-4">
+        <section
+          id="about"
+          ref={aboutRef}
+          className={`py-20 px-4 transition-all duration-700 ${aboutVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+        >
           <div className="max-w-7xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="space-y-8">
@@ -402,12 +355,22 @@ function App() {
         </section>
 
         {/* Team Section */}
-        <section id="team" className="py-20 px-4">
+        <section
+          id="team"
+          ref={teamRef}
+          className={`py-20 px-4 transition-all duration-700 ${
+            teamVisible
+              ? 'opacity-100 translate-y-0'
+              : 'opacity-0 translate-y-10'
+          }`}
+        >
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
               <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 backdrop-blur-sm border border-cyan-500/20 rounded-full px-4 py-2 mb-6">
                 <Users className="w-4 h-4 text-cyan-400" />
-                <span className="text-cyan-300 font-medium text-sm">Our Team</span>
+                <span className="text-cyan-300 font-medium text-sm">
+                  Our Team
+                </span>
               </div>
               <h2 className="text-5xl font-bold text-white mb-6">
                 Meet Our
@@ -419,64 +382,76 @@ function App() {
                 Elite digital conquerors united by a shared passion for creating extraordinary digital experiences that dominate the digital battlefield
               </p>
             </div>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 justify-center">
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 justify-center">
               {teamMembers.map((member, index) => (
-                <div 
+                <div
                   key={member.id}
-                  className={`group transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-                  style={{ transitionDelay: `${index * 200}ms` }}
+                  className={`group relative transition-all duration-500 transform hover:-translate-y-4 h-full cursor-pointer ${
+                    isVisible ? 'animate-fadeInUp' : 'opacity-0'
+                  }`}
+                  style={{ animationDelay: `${index * 150}ms` }}
                 >
-                  <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:bg-white/10 transition-all duration-500 transform hover:-translate-y-4 hover:shadow-2xl hover:shadow-cyan-500/10 overflow-hidden">
-                    {/* Animated border */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-purple-500/20 to-pink-500/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm"></div>
-                    
-                    <div className="relative z-10">
-                      <div className="relative mb-6">
-                        <div className="w-32 h-32 mx-auto relative">
-                          <img 
-                            src={member.image} 
+                  <div className="relative bg-slate-800/50 backdrop-blur-lg rounded-2xl p-8 border border-slate-700 overflow-hidden transition-all duration-500 group-hover:border-teal-400/50 group-hover:shadow-2xl group-hover:shadow-teal-500/30 h-full">
+                    <div className="absolute inset-0 bg-gradient-to-tr from-purple-900/10 via-transparent to-blue-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+                    <div className="relative z-10 text-center flex flex-col h-full">
+                      <div className="flex-grow">
+                        <div className="relative mb-6 inline-block">
+                          <img
+                            src={member.image}
                             alt={member.name}
-                            className="w-full h-full rounded-2xl object-cover ring-4 ring-cyan-400/30 group-hover:ring-cyan-400/60 transition-all duration-500"
+                            className="w-32 h-32 rounded-full object-cover ring-4 ring-slate-700/50 transition-all duration-500 group-hover:ring-teal-400"
                           />
-                          <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-cyan-400/20 to-transparent group-hover:from-cyan-400/40 transition-all duration-500"></div>
-                          
-                          {/* Professional Badge */}
-                          <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full flex items-center justify-center border-2 border-white/20">
-                            <Star className="w-4 h-4 text-white" />
+                          <div className="absolute -bottom-1 -right-1 w-9 h-9 bg-gradient-to-r from-blue-600 to-teal-500 rounded-full flex items-center justify-center border-2 border-slate-800 badge-pulse">
+                            <BadgeCheck className="w-5 h-5 text-white" />
                           </div>
                         </div>
+
+                        <h3 className="text-2xl font-bold text-white mb-1 font-['Poppins',_sans-serif]">
+                          {member.name}
+                        </h3>
+                        <p className="text-teal-400 font-semibold mb-4 text-sm uppercase tracking-wider">
+                          {member.role}
+                        </p>
+                        <p className="text-slate-300 text-sm mb-6 leading-relaxed">
+                          {member.bio}
+                        </p>
                       </div>
                       
-                      <h3 className="text-xl font-bold text-white mb-2 text-center group-hover:text-cyan-300 transition-colors">
-                        {member.name}
-                      </h3>
-                      <p className="text-cyan-300 text-center font-semibold mb-4 text-sm uppercase tracking-wider">
-                        {member.role}
-                      </p>
-                      <p className="text-white/70 text-sm text-center mb-6 leading-relaxed">
-                        {member.bio}
-                      </p>
-                      
-                      <div className="flex flex-wrap justify-center gap-2 mb-6">
-                        {member.skills.slice(0, 2).map((skill) => (
-                          <span key={skill} className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 backdrop-blur-sm border border-cyan-500/30 text-cyan-300 px-3 py-1 rounded-full text-xs font-medium">
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
-                      
-                      <div className="flex justify-center space-x-4">
-                        {member.social.github && (
-                          <a href={member.social.github} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-cyan-400 transition-colors transform hover:scale-110">
-                            <Github className="w-5 h-5" />
-                          </a>
-                        )}
-                        {member.social.linkedin && (
-                          <a href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-cyan-400 transition-colors transform hover:scale-110">
-                            <Linkedin className="w-5 h-5" />
-                          </a>
-                        )}
+                      <div>
+                        <div className="flex flex-wrap justify-center gap-2 mb-6">
+                          {member.skills.slice(0, 3).map((skill) => (
+                            <span
+                              key={skill}
+                              className="bg-slate-700/50 text-teal-300 px-4 py-1 rounded-full text-xs font-medium border border-slate-600"
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                        <div className="flex justify-center space-x-5">
+                          {member.social.github && (
+                            <a
+                              href={member.social.github}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-slate-400 hover:text-white transition-colors duration-300 social-icon-glow"
+                            >
+                              <Github className="w-6 h-6" />
+                            </a>
+                          )}
+                          {member.social.linkedin && (
+                            <a
+                              href={member.social.linkedin}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-slate-400 hover:text-white transition-colors duration-300 social-icon-glow"
+                            >
+                              <Linkedin className="w-6 h-6" />
+                            </a>
+                          )}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -487,7 +462,11 @@ function App() {
         </section>
 
         {/* Services Section */}
-        <section id="services" className="py-20 px-4">
+        <section
+          id="services"
+          ref={servicesRef}
+          className={`py-20 px-4 transition-all duration-700 ${servicesVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+        >
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
               <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm border border-purple-500/20 rounded-full px-4 py-2 mb-6">
@@ -546,23 +525,112 @@ function App() {
                 );
               })}
             </div>
+          </div>
+        </section>
 
-            {/* 3D Interactive Cards */}
-            <div className="mt-20">
-              <InteractiveCard3D />
+        {/* Our Achievements Section */}
+        <section id="achievements" className="py-20 px-4 bg-transparent">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center">
+                Our Achievements
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <AchievementCard
+                title="Best Innovation Team Award – GIH 2.0"
+                event="Galgotias College of Engineering & Technology"
+                date="March 2025"
+                image="/project-placeholder.png"
+                prize="₹10,000 Cash Prize"
+                participants="2,000+"
+                description="Developed Aushadhi AI, a drug discovery toolkit using ML-based IC50 prediction and GenAI summarization. Won in a 36-hour national hackathon."
+              />
+              <AchievementCard
+                title="1st Place – HackBlitz 2025"
+                event="Google Developer Groups – MMMUT Gorakhpur"
+                date="Feb 2025"
+                image="/project-placeholder.png"
+                prize="₹6,000 Cash Prize"
+                participants="200+"
+                description="Built SpeakSmart, a multilingual speech training platform using Librosa, LLaMA 3, and Murph AI. Integrated with FastAPI, MongoDB, WebSocket & React."
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Projects Section */}
+        <section id="projects" className="py-20 px-4 bg-transparent">
+          <div className="max-w-7xl mx-auto">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center">
+                Projects
+            </h2>
+            <div className="grid md:grid-cols-2 gap-10">
+              {/* Project 1 */}
+              <ProjectCard
+                title="Smart City Dashboard"
+                description="A real-time analytics platform for urban data, enabling city officials to monitor, analyze, and optimize city resources. Features live dashboards, predictive analytics, and citizen engagement tools."
+                achievements={[
+                  'Winner - Smart India Hackathon 2024',
+                  'Implemented predictive analytics for traffic management',
+                  'Recognized by local government for innovation'
+                ]}
+                imageAlt="Smart City Dashboard Screenshot"
+              />
+              {/* Project 2 */}
+              <ProjectCard
+                title="ISRO Space App"
+                description="A mobile app for space enthusiasts to track satellite launches, access ISRO news, and participate in virtual space missions. Includes interactive AR features and educational content."
+                achievements={[
+                  'Finalist - ISRO Hackathon 2025',
+                  "Featured in ISRO's official newsletter",
+                  'Over 10,000 downloads in first month'
+                ]}
+                imageAlt="ISRO Space App Screenshot"
+              />
+              {/* Project 3 */}
+              <ProjectCard
+                title="HealthAI Chatbot"
+                description="An AI-powered chatbot that provides instant health advice, appointment scheduling, and symptom checking. Integrates with local clinics and supports multiple languages."
+                achievements={[
+                  'Top 5 - National Health Innovation Challenge',
+                  'Deployed in 20+ clinics',
+                  'Praised for accessibility and user experience'
+                ]}
+                imageAlt="HealthAI Chatbot Screenshot"
+              />
+              {/* Project 4 */}
+              <ProjectCard
+                title="HealthAI Chatbot 2"
+                description="An AI-powered chatbot that provides instant health advice, appointment scheduling, and symptom checking. Integrates with local clinics and supports multiple languages."
+                achievements={[
+                  'Top 5 - National Health Innovation Challenge',
+                  'Deployed in 20+ clinics',
+                  'Praised for accessibility and user experience'
+                ]}
+                imageAlt="HealthAI Chatbot Screenshot"
+              />
             </div>
           </div>
         </section>
 
         {/* Contact Section */}
-        <section id="contact" className="py-20 px-4">
+        <section
+          id="contact"
+          ref={contactRef}
+          className={`py-20 pb-32 px-4 transition-all duration-700 ${
+            contactVisible
+              ? 'opacity-100 translate-y-0'
+              : 'opacity-0 translate-y-10'
+          }`}
+        >
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
               <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 backdrop-blur-sm border border-cyan-500/20 rounded-full px-4 py-2 mb-6">
                 <Mail className="w-4 h-4 text-cyan-400" />
-                <span className="text-cyan-300 font-medium text-sm">Get In Touch</span>
+                <span className="text-cyan-300 font-medium text-sm">
+                  Get In Touch
+                </span>
               </div>
-              <h2 className="text-5xl font-bold text-white mb-6">
+              <h2 className="text-5xl font-bold text-white mb-6 leading-[1.15]">
                 Let's Conquer
                 <span className="block bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
                   Together
@@ -572,18 +640,38 @@ function App() {
                 Ready to dominate the digital realm? Let's embark on this cyber conquest together
               </p>
             </div>
-            
-            <div className="grid lg:grid-cols-2 gap-16">
+
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div className="space-y-8">
                 {[
-                  { icon: Mail, title: "Email Us", info: "hello@teamcyberconqueror.com", color: "from-cyan-500 to-blue-500" },
-                  { icon: Phone, title: "Call Us", info: "+1 (555) 123-4567", color: "from-purple-500 to-pink-500" },
-                  { icon: MapPin, title: "Visit Us", info: "San Francisco, CA", color: "from-green-500 to-emerald-500" }
+                  {
+                    icon: Mail,
+                    title: 'Email Us',
+                    info: 'hello@teamcyberconqueror.com',
+                    color: 'from-cyan-500 to-blue-500',
+                  },
+                  {
+                    icon: Phone,
+                    title: 'Call Us',
+                    info: '+1 (555) 123-4567',
+                    color: 'from-purple-500 to-pink-500',
+                  },
+                  {
+                    icon: MapPin,
+                    title: 'Visit Us',
+                    info: 'San Francisco, CA',
+                    color: 'from-green-500 to-emerald-500',
+                  },
                 ].map((contact, index) => {
                   const Icon = contact.icon;
                   return (
-                    <div key={index} className="flex items-center space-x-6 group">
-                      <div className={`w-16 h-16 bg-gradient-to-r ${contact.color} rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-110`}>
+                    <div
+                      key={index}
+                      className="flex items-center space-x-6 group"
+                    >
+                      <div
+                        className={`w-16 h-16 bg-gradient-to-r ${contact.color} rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-110`}
+                      >
                         <Icon className="w-8 h-8 text-white" />
                       </div>
                       <div>
@@ -598,47 +686,56 @@ function App() {
                   );
                 })}
               </div>
-              
+
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-xl"></div>
-                <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10">
-                  <form className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div>
-                        <input 
-                          type="text" 
-                          placeholder="Your Name" 
-                          className="w-full bg-white/5 border border-white/20 rounded-2xl px-6 py-4 text-white placeholder-white/60 focus:outline-none focus:border-cyan-400 focus:bg-white/10 transition-all duration-300"
+                {/* Subtle glow effect */}
+                <div className="absolute -inset-2 bg-gradient-to-r from-blue-600 to-teal-500 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition duration-500"></div>
+
+                {/* White Glassmorphism Form Card */}
+                <div className="relative bg-white/10 backdrop-blur-2xl rounded-3xl p-8 md:p-12 border border-white/20 shadow-2xl shadow-black/20">
+                  <form className="space-y-8">
+                    <div className="grid md:grid-cols-2 gap-8">
+                      {/* Name Input */}
+                      <div className="input-wrapper">
+                        <input
+                          type="text"
+                          placeholder="Your Name"
+                          className="input-underlined"
                         />
+                        <span className="input-focus-line"></span>
                       </div>
-                      <div>
-                        <input 
-                          type="email" 
-                          placeholder="Your Email" 
-                          className="w-full bg-white/5 border border-white/20 rounded-2xl px-6 py-4 text-white placeholder-white/60 focus:outline-none focus:border-cyan-400 focus:bg-white/10 transition-all duration-300"
+                      {/* Email Input */}
+                      <div className="input-wrapper">
+                        <input
+                          type="email"
+                          placeholder="Your Email"
+                          className="input-underlined"
                         />
+                        <span className="input-focus-line"></span>
                       </div>
                     </div>
-                    <div>
-                      <input 
-                        type="text" 
-                        placeholder="Project Subject" 
-                        className="w-full bg-white/5 border border-white/20 rounded-2xl px-6 py-4 text-white placeholder-white/60 focus:outline-none focus:border-cyan-400 focus:bg-white/10 transition-all duration-300"
+                    {/* Subject Input */}
+                    <div className="input-wrapper">
+                      <input
+                        type="text"
+                        placeholder="Project Subject"
+                        className="input-underlined"
                       />
+                      <span className="input-focus-line"></span>
                     </div>
-                    <div>
-                      <textarea 
-                        placeholder="Tell us about your cyber conquest vision..." 
-                        rows={6}
-                        className="w-full bg-white/5 border border-white/20 rounded-2xl px-6 py-4 text-white placeholder-white/60 focus:outline-none focus:border-cyan-400 focus:bg-white/10 transition-all duration-300 resize-none"
+                    {/* Message Textarea */}
+                    <div className="input-wrapper">
+                      <textarea
+                        placeholder="Tell us about your cyber conquest vision..."
+                        className="input-underlined"
                       />
+                      <span className="input-focus-line"></span>
                     </div>
-                    <button className="group w-full bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 text-white px-8 py-5 rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105 relative overflow-hidden">
-                      <span className="relative z-10 flex items-center justify-center">
-                        Launch Conquest
-                        <Rocket className="w-6 h-6 ml-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                      </span>
-                      <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 via-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                    {/* Submit Button */}
+                    <button className="w-full bg-gradient-to-r from-blue-700 via-teal-600 to-teal-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-lg hover:shadow-teal-500/40 transition-all duration-300 flex items-center justify-center group">
+                      Send Message
+                      <Send className="w-5 h-5 ml-3 transform transition-transform duration-300 group-hover:translate-x-1" />
                     </button>
                   </form>
                 </div>
@@ -657,7 +754,7 @@ function App() {
               >
                 <div className="relative">
                   <div className="w-10 h-10 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/25 group-hover:shadow-cyan-500/40 transition-all duration-300">
-                    <Sparkles className="w-6 h-6 text-white animate-pulse" />
+                    <TerminalSquare className="w-6 h-6 text-white animate-pulse" />
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-xl blur-md opacity-50 animate-pulse group-hover:opacity-70 transition-opacity duration-300"></div>
                 </div>
@@ -690,6 +787,70 @@ function App() {
             </div>
           </div>
         </footer>
+      </div>
+    </div>
+  );
+}
+
+// ProjectCard component (to be placed above App or in a separate file)
+interface ProjectCardProps {
+  title: string;
+  description: string;
+  achievements: string[];
+  imageAlt: string;
+  showImage?: boolean;
+}
+
+function ProjectCard({ title, description, achievements, imageAlt, showImage = false }: ProjectCardProps) {
+  const cardRef = React.useRef<HTMLDivElement>(null);
+  React.useEffect(() => {
+    if (!cardRef.current) return;
+    // GSAP animation: fade-in and slide-up on scroll
+    if (window.gsap && 'ScrollTrigger' in window) {
+      window.gsap.fromTo(
+        cardRef.current,
+        { opacity: 0, y: 60, scale: 0.98 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 1,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: cardRef.current,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse',
+          },
+        }
+      );
+    }
+  }, []);
+  return (
+    <div
+      ref={cardRef}
+      className="hover-card bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-lg flex flex-col md:flex-row items-center md:items-start gap-8"
+    >
+      {showImage && (
+        <div className="w-32 h-32 md:w-40 md:h-40 bg-gradient-to-br from-cyan-700/30 to-purple-700/30 rounded-2xl flex items-center justify-center overflow-hidden border border-cyan-500/20 mr-0 md:mr-8 mb-6 md:mb-0">
+          {/* TODO: Insert project image here */}
+          <img
+            src="/project-placeholder.png"
+            alt={imageAlt}
+            className="object-cover w-full h-full rounded-2xl opacity-60"
+          />
+        </div>
+      )}
+      <div className="flex-1 w-full">
+        <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">{title}</h3>
+        <p className="text-white/80 text-base md:text-lg mb-4">{description}</p>
+        <div>
+          <div className="text-cyan-400 font-semibold mb-2">Related Achievements</div>
+          <ul className="list-disc list-inside text-white/70 text-sm md:text-base space-y-1">
+            {achievements.map((ach: string, idx: number) => (
+              <li key={idx}>{ach}</li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
