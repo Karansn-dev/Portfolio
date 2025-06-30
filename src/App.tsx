@@ -21,13 +21,13 @@ import {
   Menu,
   X,
   Trophy,
-  Hammer,
-  ExternalLink,
-  ChevronDown,
-  Play,
-  Calendar,
-  BookOpen
+  Hammer
 } from 'lucide-react';
+import AnimatedBackground from './components/AnimatedBackground';
+import Simple3DBackground from './components/Simple3DBackground';
+import ParticleField3D from './components/ParticleField3D';
+import GeometricShapes3D from './components/GeometricShapes3D';
+import InteractiveCard3D from './components/InteractiveCard3D';
 
 interface TeamMember {
   id: number;
@@ -42,25 +42,15 @@ interface TeamMember {
   };
 }
 
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-  technologies: string[];
-  liveUrl?: string;
-  githubUrl?: string;
-  featured: boolean;
-}
-
 const teamMembers: TeamMember[] = [
   {
     id: 1,
     name: "Krishnav Talukdar",
     role: "ML Developer",
+    // LinkedIn profile photo - using a professional tech-focused image
     image: "https://images.pexels.com/photos/3785079/pexels-photo-3785079.jpeg?auto=compress&cs=tinysrgb&w=400",
     bio: "Passionate Machine Learning Developer with expertise in AI/ML algorithms, data science, and building intelligent systems that solve real-world problems.",
-    skills: ["Machine Learning", "Python", "TensorFlow", "Data Science", "PyTorch", "Computer Vision"],
+    skills: ["Machine Learning", "Python", "TensorFlow", "Data Science"],
     social: {
       github: "https://github.com/CYBERCONQUEROR",
       linkedin: "https://www.linkedin.com/in/krishnav-talukdar-360059264/"
@@ -70,9 +60,10 @@ const teamMembers: TeamMember[] = [
     id: 2,
     name: "Karan Singh Negi",
     role: "UI/UX Designer & Frontend Developer",
+    // LinkedIn profile photo - using a creative designer-focused image
     image: "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400",
     bio: "Creative UI/UX Designer and Frontend Developer specializing in creating beautiful, user-centered digital experiences with modern web technologies.",
-    skills: ["UI/UX Design", "React", "Figma", "Frontend Development", "TypeScript", "Tailwind CSS"],
+    skills: ["UI/UX Design", "React", "Figma", "Frontend Development"],
     social: {
       github: "https://github.com/karansinghnegi",
       linkedin: "https://www.linkedin.com/in/karan-singh-negi-25816b338/"
@@ -84,7 +75,7 @@ const teamMembers: TeamMember[] = [
     role: "Backend Developer",
     image: "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=400",
     bio: "Experienced Backend Developer focused on building scalable server-side applications and robust API architectures for modern web solutions.",
-    skills: ["Node.js", "Python", "Database Design", "API Development", "MongoDB", "PostgreSQL"],
+    skills: ["Node.js", "Python", "Database Design", "API Development"],
     social: {
       github: "https://github.com/alexrivera",
       linkedin: "https://linkedin.com/in/alexrivera"
@@ -92,93 +83,30 @@ const teamMembers: TeamMember[] = [
   }
 ];
 
-const projects: Project[] = [
-  {
-    id: 1,
-    title: "AI-Powered Analytics Dashboard",
-    description: "A comprehensive analytics platform with machine learning insights, real-time data visualization, and predictive modeling capabilities.",
-    image: "https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=800",
-    technologies: ["React", "Python", "TensorFlow", "D3.js", "PostgreSQL"],
-    liveUrl: "#",
-    githubUrl: "#",
-    featured: true
-  },
-  {
-    id: 2,
-    title: "E-Commerce Platform",
-    description: "Modern e-commerce solution with advanced filtering, payment integration, and inventory management system.",
-    image: "https://images.pexels.com/photos/230544/pexels-photo-230544.jpeg?auto=compress&cs=tinysrgb&w=800",
-    technologies: ["Next.js", "Node.js", "Stripe", "MongoDB", "Tailwind CSS"],
-    liveUrl: "#",
-    githubUrl: "#",
-    featured: true
-  },
-  {
-    id: 3,
-    title: "Task Management App",
-    description: "Collaborative project management tool with real-time updates, team collaboration features, and advanced reporting.",
-    image: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800",
-    technologies: ["React", "Firebase", "Material-UI", "WebSocket"],
-    liveUrl: "#",
-    githubUrl: "#",
-    featured: false
-  },
-  {
-    id: 4,
-    title: "Weather Forecast App",
-    description: "Beautiful weather application with location-based forecasts, interactive maps, and detailed weather analytics.",
-    image: "https://images.pexels.com/photos/1118873/pexels-photo-1118873.jpeg?auto=compress&cs=tinysrgb&w=800",
-    technologies: ["Vue.js", "OpenWeather API", "Chart.js", "PWA"],
-    liveUrl: "#",
-    githubUrl: "#",
-    featured: false
-  },
-  {
-    id: 5,
-    title: "Social Media Dashboard",
-    description: "Unified social media management platform with analytics, scheduling, and multi-platform posting capabilities.",
-    image: "https://images.pexels.com/photos/267350/pexels-photo-267350.jpeg?auto=compress&cs=tinysrgb&w=800",
-    technologies: ["React", "Node.js", "Redis", "Social APIs", "Chart.js"],
-    liveUrl: "#",
-    githubUrl: "#",
-    featured: true
-  },
-  {
-    id: 6,
-    title: "Learning Management System",
-    description: "Comprehensive LMS with course creation, progress tracking, interactive quizzes, and student analytics.",
-    image: "https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=800",
-    technologies: ["React", "Express.js", "MongoDB", "Socket.io", "AWS"],
-    liveUrl: "#",
-    githubUrl: "#",
-    featured: false
-  }
-];
-
 const services = [
   {
     icon: Code,
     title: "Web Development",
-    description: "Custom web applications built with cutting-edge technologies and best practices for optimal performance.",
-    features: ["Responsive Design", "Performance Optimization", "SEO-Friendly", "Cross-Browser Compatible"]
+    description: "Custom web applications built with cutting-edge technologies and best practices.",
+    color: "from-cyan-400 to-blue-500"
   },
   {
     icon: Palette,
     title: "UI/UX Design",
-    description: "Beautiful, intuitive designs that provide exceptional user experiences and drive engagement.",
-    features: ["User Research", "Wireframing", "Prototyping", "Design Systems"]
+    description: "Beautiful, intuitive designs that provide exceptional user experiences.",
+    color: "from-pink-400 to-purple-500"
   },
   {
     icon: Globe,
     title: "Digital Strategy",
-    description: "Comprehensive digital solutions to help your business thrive in the modern online landscape.",
-    features: ["Market Analysis", "Brand Strategy", "Digital Marketing", "Growth Planning"]
+    description: "Comprehensive digital solutions to help your business thrive online.",
+    color: "from-green-400 to-emerald-500"
   },
   {
     icon: Zap,
     title: "Performance Optimization",
-    description: "Lightning-fast websites optimized for speed, SEO, and exceptional user engagement.",
-    features: ["Speed Optimization", "SEO Enhancement", "Core Web Vitals", "Analytics Setup"]
+    description: "Lightning-fast websites optimized for speed, SEO, and user engagement.",
+    color: "from-yellow-400 to-orange-500"
   }
 ];
 
@@ -187,41 +115,53 @@ const achievements = [
     icon: Trophy, 
     number: "7+", 
     label: "Hackathons", 
+    color: "text-cyan-400",
+    bgColor: "from-cyan-400 to-blue-500",
     description: "Participated in major hackathons"
   },
   { 
     icon: Award, 
     number: "4", 
     label: "Wins", 
+    color: "text-pink-400",
+    bgColor: "from-pink-400 to-purple-500",
     description: "Championship victories achieved"
   },
   { 
     icon: Hammer, 
     number: "15+", 
     label: "Projects Built", 
+    color: "text-yellow-400",
+    bgColor: "from-yellow-400 to-orange-500",
     description: "Successful projects delivered"
   },
   { 
     icon: Users, 
     number: "100+", 
     label: "Happy Clients", 
+    color: "text-green-400",
+    bgColor: "from-green-400 to-emerald-500",
     description: "Satisfied customers worldwide"
   }
 ];
 
 function App() {
   const [isVisible, setIsVisible] = useState(false);
+  const [activeService, setActiveService] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
-  const [activeFilter, setActiveFilter] = useState('all');
 
   useEffect(() => {
     setIsVisible(true);
-    
+    const interval = setInterval(() => {
+      setActiveService((prev) => (prev + 1) % services.length);
+    }, 4000);
+
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', handleScroll);
 
     return () => {
+      clearInterval(interval);
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
@@ -233,592 +173,524 @@ function App() {
     });
   };
 
-  const filteredProjects = activeFilter === 'all' 
-    ? projects 
-    : activeFilter === 'featured' 
-    ? projects.filter(p => p.featured)
-    : projects.filter(p => !p.featured);
-
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrollY > 50 ? 'bg-white/95 backdrop-blur-xl shadow-lg border-b border-gray-100' : 'bg-transparent'
-      }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <button 
-              onClick={scrollToTop}
-              className="flex items-center space-x-3 group cursor-pointer transition-all duration-300"
-            >
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300">
-                <Sparkles className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <span className="text-xl font-bold text-gray-900 group-hover:text-blue-600 transition-colors duration-300">
-                  Team CyberConqueror
-                </span>
-                <div className="text-xs text-gray-500 font-medium">Digital Innovators</div>
-              </div>
-            </button>
-            
-            {/* Desktop Menu */}
-            <div className="hidden md:flex space-x-8">
-              {['Home', 'About', 'Team', 'Projects', 'Services', 'Contact'].map((item) => (
-                <a 
-                  key={item}
-                  href={`#${item.toLowerCase()}`} 
-                  className="relative text-gray-700 hover:text-blue-600 transition-all duration-300 font-medium group"
-                >
-                  {item}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300"></span>
-                </a>
-              ))}
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button 
-              className="md:hidden text-gray-700 p-2"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden bg-white/95 backdrop-blur-xl border-t border-gray-100">
-            <div className="px-4 py-6 space-y-4">
-              {['Home', 'About', 'Team', 'Projects', 'Services', 'Contact'].map((item) => (
-                <a 
-                  key={item}
-                  href={`#${item.toLowerCase()}`} 
-                  className="block text-gray-700 hover:text-blue-600 transition-colors font-medium"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  {item}
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
-      </nav>
-
-      {/* Hero Section */}
-      <section id="home" className="pt-24 pb-20 px-4 min-h-screen flex items-center bg-gradient-to-br from-gray-50 to-blue-50">
-        <div className="max-w-7xl mx-auto text-center w-full">
-          <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <div className="mb-8">
-              <div className="inline-flex items-center space-x-2 bg-blue-100 rounded-full px-6 py-3 mb-6">
-                <Star className="w-5 h-5 text-blue-600" />
-                <span className="text-blue-700 font-medium">Welcome to Our Digital Universe</span>
-              </div>
-            </div>
-            
-            <h1 className="text-5xl md:text-7xl font-bold mb-8 leading-tight">
-              <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 bg-clip-text text-transparent">
-                Team CyberConqueror
-              </span>
-              <br />
-              <span className="text-gray-800 text-3xl md:text-4xl">Digital Innovators</span>
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-gray-600 mb-12 max-w-4xl mx-auto leading-relaxed">
-              We're a passionate team of developers, designers, and innovators creating extraordinary digital experiences that drive success and inspire growth.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-16">
-              <button className="group bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                <span className="flex items-center">
-                  Start Your Project
-                  <Rocket className="inline-block w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                </span>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+      {/* Animated Background */}
+      <AnimatedBackground />
+      
+      {/* 3D Particle Field Background */}
+      <ParticleField3D />
+      
+      {/* Content */}
+      <div className="relative z-10">
+        {/* Navigation */}
+        <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+          scrollY > 50 ? 'bg-black/30 backdrop-blur-xl border-b border-cyan-500/20' : 'bg-transparent'
+        }`}>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between items-center py-4">
+              <button 
+                onClick={scrollToTop}
+                className="flex items-center space-x-3 group cursor-pointer transition-all duration-300 hover:scale-105"
+              >
+                <div className="relative">
+                  <div className="w-10 h-10 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/25 group-hover:shadow-cyan-500/40 transition-all duration-300">
+                    <Sparkles className="w-6 h-6 text-white animate-pulse" />
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-xl blur-md opacity-50 animate-pulse group-hover:opacity-70 transition-opacity duration-300"></div>
+                </div>
+                <div>
+                  <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent group-hover:from-cyan-300 group-hover:to-purple-300 transition-all duration-300">
+                    Team CyberConqueror
+                  </span>
+                  <div className="text-xs text-cyan-300/70 font-medium group-hover:text-cyan-300/90 transition-colors duration-300">Digital Innovators</div>
+                </div>
               </button>
               
-              <button className="group border-2 border-gray-300 text-gray-700 px-8 py-4 rounded-full font-semibold text-lg hover:bg-gray-50 hover:border-gray-400 transition-all duration-300">
-                <span className="flex items-center">
-                  View Our Work
-                  <ArrowRight className="inline-block w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                </span>
-              </button>
-            </div>
-
-            {/* Achievement Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-              {achievements.map((achievement, index) => {
-                const Icon = achievement.icon;
-                return (
-                  <div 
-                    key={index}
-                    className={`bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-500 transform hover:scale-105 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-                    style={{ transitionDelay: `${index * 200}ms` }}
+              {/* Desktop Menu */}
+              <div className="hidden md:flex space-x-8">
+                {['Home', 'About', 'Team', 'Services', 'Contact'].map((item) => (
+                  <a 
+                    key={item}
+                    href={`#${item.toLowerCase()}`} 
+                    className="relative text-white/80 hover:text-cyan-400 transition-all duration-300 font-medium group"
                   >
-                    <div className="mb-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center mx-auto">
-                        <Icon className="w-6 h-6 text-white" />
-                      </div>
-                    </div>
-                    
-                    <div className="text-2xl font-bold text-gray-900 mb-1">
-                      {achievement.number}
-                    </div>
-                    <div className="text-gray-700 font-semibold mb-1">
-                      {achievement.label}
-                    </div>
-                    <div className="text-gray-500 text-sm">
-                      {achievement.description}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* About Section */}
-      <section id="about" className="py-20 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center space-x-2 bg-purple-100 rounded-full px-4 py-2 mb-6">
-              <Heart className="w-4 h-4 text-purple-600" />
-              <span className="text-purple-700 font-medium text-sm">About Us</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Crafting Digital Excellence
-              <span className="block text-purple-600">Since 2025</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              We believe that exceptional design and flawless execution can transform businesses and create meaningful connections with users.
-            </p>
-          </div>
-
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-8">
-              <div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">Our Mission</h3>
-                <p className="text-gray-600 leading-relaxed mb-6">
-                  We're dedicated to creating digital solutions that not only meet today's needs but anticipate tomorrow's challenges. Our team combines technical expertise with creative vision to deliver products that make a real difference.
-                </p>
-                
-                <p className="text-gray-600 leading-relaxed">
-                  From concept to launch, we pour our passion into every project, ensuring that each solution is tailored to our clients' unique goals and challenges.
-                </p>
+                    {item}
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-400 group-hover:w-full transition-all duration-300"></span>
+                  </a>
+                ))}
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                {[
-                  { icon: Award, title: "Excellence", subtitle: "In every detail" },
-                  { icon: Target, title: "Focus", subtitle: "On your goals" },
-                  { icon: Star, title: "Quality", subtitle: "Above all else" },
-                  { icon: Users, title: "Collaboration", subtitle: "Every step" }
-                ].map((item, index) => {
-                  const Icon = item.icon;
+              {/* Mobile Menu Button */}
+              <button 
+                className="md:hidden text-white p-2"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              >
+                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden bg-black/90 backdrop-blur-xl border-t border-cyan-500/20">
+              <div className="px-4 py-6 space-y-4">
+                {['Home', 'About', 'Team', 'Services', 'Contact'].map((item) => (
+                  <a 
+                    key={item}
+                    href={`#${item.toLowerCase()}`} 
+                    className="block text-white/80 hover:text-cyan-400 transition-colors font-medium"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {item}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+        </nav>
+
+        {/* Hero Section */}
+        <section id="home" className="pt-24 pb-20 px-4 min-h-screen flex items-center">
+          <div className="max-w-7xl mx-auto text-center w-full">
+            <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+              <div className="mb-8">
+                <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 backdrop-blur-sm border border-cyan-500/20 rounded-full px-6 py-3 mb-6">
+                  <Star className="w-5 h-5 text-cyan-400 animate-pulse" />
+                  <span className="text-cyan-300 font-medium">Welcome to the Digital Realm</span>
+                </div>
+              </div>
+              
+              <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight">
+                <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-pulse">
+                  Team CyberConqueror
+                </span>
+                <br />
+                <span className="text-white text-4xl md:text-5xl">Digital Innovators</span>
+              </h1>
+              
+              <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-4xl mx-auto leading-relaxed">
+                A passionate team of cyber warriors, developers, and innovators conquering the digital realm with extraordinary experiences that transcend boundaries
+              </p>
+              
+              <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 mb-16">
+                <button className="group relative bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 text-white px-10 py-5 rounded-full font-bold text-lg hover:shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105 overflow-hidden">
+                  <span className="relative z-10 flex items-center">
+                    Launch Your Vision
+                    <Rocket className="inline-block w-6 h-6 ml-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 via-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </button>
+                
+                <button className="group border-2 border-cyan-400/50 text-white px-10 py-5 rounded-full font-bold text-lg hover:bg-cyan-400/10 hover:border-cyan-400 transition-all duration-300 backdrop-blur-sm">
+                  <span className="flex items-center">
+                    Explore Our Universe
+                    <ArrowRight className="inline-block w-6 h-6 ml-3 group-hover:translate-x-1 transition-transform" />
+                  </span>
+                </button>
+              </div>
+
+              {/* Enhanced Achievement Cards */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                {achievements.map((achievement, index) => {
+                  const Icon = achievement.icon;
                   return (
-                    <div key={index} className="bg-gray-50 rounded-xl p-4 hover:bg-gray-100 transition-colors duration-300">
-                      <Icon className="w-8 h-8 text-blue-600 mb-3" />
-                      <div className="text-gray-900 font-semibold text-sm mb-1">{item.title}</div>
-                      <div className="text-gray-500 text-xs">{item.subtitle}</div>
+                    <div 
+                      key={index}
+                      className={`group relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:bg-white/10 transition-all duration-500 transform hover:scale-105 hover:-translate-y-2 overflow-hidden ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                      style={{ transitionDelay: `${index * 200}ms` }}
+                    >
+                      {/* Animated border */}
+                      <div className={`absolute inset-0 bg-gradient-to-r ${achievement.bgColor} opacity-0 group-hover:opacity-20 transition-opacity duration-500 rounded-3xl blur-sm`}></div>
+                      
+                      <div className="relative z-10">
+                        <div className="mb-6">
+                          <div className={`w-20 h-20 bg-gradient-to-br ${achievement.bgColor} rounded-2xl flex items-center justify-center group-hover:shadow-lg transition-all duration-500 transform group-hover:scale-110 group-hover:rotate-3 mx-auto`}>
+                            <Icon className="w-10 h-10 text-white" />
+                          </div>
+                        </div>
+                        
+                        <div className={`text-3xl font-bold ${achievement.color} mb-2 group-hover:text-white transition-colors duration-300`}>
+                          {achievement.number}
+                        </div>
+                        <div className="text-white font-semibold text-lg mb-2">
+                          {achievement.label}
+                        </div>
+                        <div className="text-white/60 text-sm leading-relaxed group-hover:text-white/80 transition-colors">
+                          {achievement.description}
+                        </div>
+                        
+                        <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <div className={`h-1 bg-gradient-to-r ${achievement.bgColor} rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500`}></div>
+                        </div>
+                      </div>
                     </div>
                   );
                 })}
               </div>
-            </div>
-            
-            <div className="relative">
-              <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-3xl p-8">
-                <img 
-                  src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                  alt="Team collaboration" 
-                  className="w-full h-80 object-cover rounded-2xl shadow-lg"
-                />
-                <div className="mt-6 grid grid-cols-3 gap-4 text-center">
-                  <div>
-                    <div className="text-2xl font-bold text-blue-600">50+</div>
-                    <div className="text-gray-600 text-sm">Projects</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-purple-600">3</div>
-                    <div className="text-gray-600 text-sm">Team Members</div>
-                  </div>
-                  <div>
-                    <div className="text-2xl font-bold text-green-600">100%</div>
-                    <div className="text-gray-600 text-sm">Satisfaction</div>
-                  </div>
-                </div>
+
+              {/* 3D Geometric Shapes */}
+              <div className="mt-16 max-w-4xl mx-auto">
+                <GeometricShapes3D />
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Team Section */}
-      <section id="team" className="py-20 px-4 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center space-x-2 bg-blue-100 rounded-full px-4 py-2 mb-6">
-              <Users className="w-4 h-4 text-blue-600" />
-              <span className="text-blue-700 font-medium text-sm">Our Team</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Meet Our
-              <span className="block text-blue-600">Talented Team</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Passionate professionals united by a shared vision of creating exceptional digital experiences
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {teamMembers.map((member, index) => (
-              <div 
-                key={member.id}
-                className={`group bg-white rounded-3xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-                style={{ transitionDelay: `${index * 200}ms` }}
-              >
-                <div className="text-center mb-6">
-                  <div className="relative inline-block mb-4">
-                    <img 
-                      src={member.image} 
-                      alt={member.name}
-                      className="w-24 h-24 rounded-2xl object-cover mx-auto ring-4 ring-blue-100 group-hover:ring-blue-200 transition-all duration-300"
-                    />
-                    <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-2 border-white"></div>
+        {/* About Section */}
+        <section id="about" className="py-20 px-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div className="space-y-8">
+                <div>
+                  <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm border border-purple-500/20 rounded-full px-4 py-2 mb-6">
+                    <Heart className="w-4 h-4 text-pink-400" />
+                    <span className="text-purple-300 font-medium text-sm">Our Story</span>
                   </div>
-                  
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">
-                    {member.name}
-                  </h3>
-                  <p className="text-blue-600 font-semibold text-sm mb-4">
-                    {member.role}
-                  </p>
+                  <h2 className="text-5xl font-bold text-white mb-6 leading-tight">
+                    Conquering Excellence
+                    <span className="block bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                      Since 2025
+                    </span>
+                  </h2>
                 </div>
                 
-                <p className="text-gray-600 text-sm text-center mb-6 leading-relaxed">
-                  {member.bio}
+                <p className="text-white/80 text-lg leading-relaxed">
+                  We're Team CyberConqueror - a dedicated team of digital warriors who believe that great design and flawless execution can transform businesses and delight users. Our mission is to conquer the digital realm with innovative solutions and remarkable digital products.
                 </p>
                 
-                <div className="flex flex-wrap justify-center gap-2 mb-6">
-                  {member.skills.slice(0, 3).map((skill) => (
-                    <span key={skill} className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-xs font-medium">
-                      {skill}
+                <p className="text-white/70 leading-relaxed">
+                  From concept to launch, we pour our passion into every pixel, every line of code, and every user interaction. We don't just build websites and apps – we create digital experiences that inspire, engage, and conquer the competition.
+                </p>
+
+                <div className="flex flex-wrap gap-4">
+                  {['Innovation', 'Victory', 'Creativity', 'Excellence'].map((value, index) => (
+                    <span 
+                      key={value}
+                      className="bg-gradient-to-r from-cyan-500/10 to-purple-500/10 backdrop-blur-sm border border-cyan-500/20 rounded-full px-6 py-3 text-cyan-300 font-medium"
+                    >
+                      {value}
                     </span>
                   ))}
                 </div>
-                
-                <div className="flex justify-center space-x-4">
-                  {member.social.github && (
-                    <a href={member.social.github} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-600 transition-colors transform hover:scale-110">
-                      <Github className="w-5 h-5" />
-                    </a>
-                  )}
-                  {member.social.linkedin && (
-                    <a href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-blue-600 transition-colors transform hover:scale-110">
-                      <Linkedin className="w-5 h-5" />
-                    </a>
-                  )}
+              </div>
+              
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-pink-500/20 rounded-3xl blur-2xl animate-pulse"></div>
+                <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10">
+                  <div className="grid grid-cols-2 gap-6">
+                    {[
+                      { icon: Award, title: "Excellence", subtitle: "In every detail", color: "text-purple-400" },
+                      { icon: Target, title: "Focus", subtitle: "On your goals", color: "text-pink-400" },
+                      { icon: Star, title: "Quality", subtitle: "Above all else", color: "text-yellow-400" },
+                      { icon: Users, title: "Team", subtitle: "Collaboration", color: "text-cyan-400" }
+                    ].map((item, index) => {
+                      const Icon = item.icon;
+                      return (
+                        <div key={index} className="group bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/10 transition-all duration-300 transform hover:scale-105">
+                          <Icon className={`w-10 h-10 ${item.color} mb-4 group-hover:scale-110 transition-transform`} />
+                          <div className="text-white font-bold text-lg mb-1">{item.title}</div>
+                          <div className="text-white/60 text-sm">{item.subtitle}</div>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Projects Section */}
-      <section id="projects" className="py-20 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center space-x-2 bg-green-100 rounded-full px-4 py-2 mb-6">
-              <Rocket className="w-4 h-4 text-green-600" />
-              <span className="text-green-700 font-medium text-sm">Our Work</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Featured
-              <span className="block text-green-600">Projects</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed mb-8">
-              Explore our portfolio of successful projects that showcase our expertise and creativity
-            </p>
+          </div>
+        </section>
 
-            {/* Filter Buttons */}
-            <div className="flex justify-center space-x-4 mb-12">
-              {[
-                { key: 'all', label: 'All Projects' },
-                { key: 'featured', label: 'Featured' },
-                { key: 'recent', label: 'Recent' }
-              ].map((filter) => (
-                <button
-                  key={filter.key}
-                  onClick={() => setActiveFilter(filter.key)}
-                  className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
-                    activeFilter === filter.key
-                      ? 'bg-blue-600 text-white shadow-lg'
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                  }`}
+        {/* Team Section */}
+        <section id="team" className="py-20 px-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 backdrop-blur-sm border border-cyan-500/20 rounded-full px-4 py-2 mb-6">
+                <Users className="w-4 h-4 text-cyan-400" />
+                <span className="text-cyan-300 font-medium text-sm">Our Team</span>
+              </div>
+              <h2 className="text-5xl font-bold text-white mb-6">
+                Meet Our
+                <span className="block bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                  Teammates
+                </span>
+              </h2>
+              <p className="text-white/80 text-xl max-w-3xl mx-auto leading-relaxed">
+                Elite digital conquerors united by a shared passion for creating extraordinary digital experiences that dominate the digital battlefield
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 justify-center">
+              {teamMembers.map((member, index) => (
+                <div 
+                  key={member.id}
+                  className={`group transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                  style={{ transitionDelay: `${index * 200}ms` }}
                 >
-                  {filter.label}
-                </button>
+                  <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 hover:bg-white/10 transition-all duration-500 transform hover:-translate-y-4 hover:shadow-2xl hover:shadow-cyan-500/10 overflow-hidden">
+                    {/* Animated border */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-purple-500/20 to-pink-500/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm"></div>
+                    
+                    <div className="relative z-10">
+                      <div className="relative mb-6">
+                        <div className="w-32 h-32 mx-auto relative">
+                          <img 
+                            src={member.image} 
+                            alt={member.name}
+                            className="w-full h-full rounded-2xl object-cover ring-4 ring-cyan-400/30 group-hover:ring-cyan-400/60 transition-all duration-500"
+                          />
+                          <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-cyan-400/20 to-transparent group-hover:from-cyan-400/40 transition-all duration-500"></div>
+                          
+                          {/* Professional Badge */}
+                          <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full flex items-center justify-center border-2 border-white/20">
+                            <Star className="w-4 h-4 text-white" />
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <h3 className="text-xl font-bold text-white mb-2 text-center group-hover:text-cyan-300 transition-colors">
+                        {member.name}
+                      </h3>
+                      <p className="text-cyan-300 text-center font-semibold mb-4 text-sm uppercase tracking-wider">
+                        {member.role}
+                      </p>
+                      <p className="text-white/70 text-sm text-center mb-6 leading-relaxed">
+                        {member.bio}
+                      </p>
+                      
+                      <div className="flex flex-wrap justify-center gap-2 mb-6">
+                        {member.skills.slice(0, 2).map((skill) => (
+                          <span key={skill} className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 backdrop-blur-sm border border-cyan-500/30 text-cyan-300 px-3 py-1 rounded-full text-xs font-medium">
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                      
+                      <div className="flex justify-center space-x-4">
+                        {member.social.github && (
+                          <a href={member.social.github} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-cyan-400 transition-colors transform hover:scale-110">
+                            <Github className="w-5 h-5" />
+                          </a>
+                        )}
+                        {member.social.linkedin && (
+                          <a href={member.social.linkedin} target="_blank" rel="noopener noreferrer" className="text-white/60 hover:text-cyan-400 transition-colors transform hover:scale-110">
+                            <Linkedin className="w-5 h-5" />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               ))}
             </div>
           </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredProjects.map((project, index) => (
-              <div 
-                key={project.id}
-                className="group bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2 overflow-hidden"
-              >
-                <div className="relative overflow-hidden">
-                  <img 
-                    src={project.image} 
-                    alt={project.title}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute bottom-4 left-4 right-4 flex space-x-2">
-                      {project.liveUrl && (
-                        <a href={project.liveUrl} className="bg-white/90 text-gray-900 px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1 hover:bg-white transition-colors">
-                          <ExternalLink className="w-3 h-3" />
-                          <span>Live</span>
-                        </a>
-                      )}
-                      {project.githubUrl && (
-                        <a href={project.githubUrl} className="bg-white/90 text-gray-900 px-3 py-1 rounded-full text-sm font-medium flex items-center space-x-1 hover:bg-white transition-colors">
-                          <Github className="w-3 h-3" />
-                          <span>Code</span>
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                  {project.featured && (
-                    <div className="absolute top-4 right-4 bg-yellow-400 text-yellow-900 px-2 py-1 rounded-full text-xs font-bold">
-                      Featured
-                    </div>
-                  )}
-                </div>
-                
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">
-                    {project.description}
-                  </p>
-                  
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech) => (
-                      <span key={tech} className="bg-gray-100 text-gray-700 px-2 py-1 rounded-md text-xs font-medium">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+        </section>
+
+        {/* Services Section */}
+        <section id="services" className="py-20 px-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm border border-purple-500/20 rounded-full px-4 py-2 mb-6">
+                <Zap className="w-4 h-4 text-purple-400" />
+                <span className="text-purple-300 font-medium text-sm">Our Services</span>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Services Section */}
-      <section id="services" className="py-20 px-4 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center space-x-2 bg-purple-100 rounded-full px-4 py-2 mb-6">
-              <Zap className="w-4 h-4 text-purple-600" />
-              <span className="text-purple-700 font-medium text-sm">Our Services</span>
+              <h2 className="text-5xl font-bold text-white mb-6">
+                What We
+                <span className="block bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                  Conquer
+                </span>
+              </h2>
+              <p className="text-white/80 text-xl max-w-3xl mx-auto leading-relaxed">
+                We offer comprehensive digital solutions to help your business dominate in the modern cyber landscape
+              </p>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              What We
-              <span className="block text-purple-600">Offer</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Comprehensive digital solutions tailored to help your business succeed in the modern landscape
-            </p>
-          </div>
-          
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {services.map((service, index) => {
-              const Icon = service.icon;
-              return (
-                <div 
-                  key={index}
-                  className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 transform hover:-translate-y-2"
-                >
-                  <div className="mb-6">
-                    <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                      <Icon className="w-8 h-8 text-white" />
-                    </div>
-                  </div>
-                  
-                  <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors">
-                    {service.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">
-                    {service.description}
-                  </p>
-                  
-                  <ul className="space-y-2">
-                    {service.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center text-sm text-gray-500">
-                        <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2"></div>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Section */}
-      <section id="contact" className="py-20 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center space-x-2 bg-blue-100 rounded-full px-4 py-2 mb-6">
-              <Mail className="w-4 h-4 text-blue-600" />
-              <span className="text-blue-700 font-medium text-sm">Get In Touch</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-              Let's Work
-              <span className="block text-blue-600">Together</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-              Ready to bring your vision to life? Let's discuss your project and create something amazing together.
-            </p>
-          </div>
-          
-          <div className="grid lg:grid-cols-2 gap-16">
-            <div className="space-y-8">
-              {[
-                { icon: Mail, title: "Email Us", info: "hello@teamcyberconqueror.com", color: "bg-blue-100 text-blue-600" },
-                { icon: Phone, title: "Call Us", info: "+1 (555) 123-4567", color: "bg-green-100 text-green-600" },
-                { icon: MapPin, title: "Visit Us", info: "San Francisco, CA", color: "bg-purple-100 text-purple-600" }
-              ].map((contact, index) => {
-                const Icon = contact.icon;
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {services.map((service, index) => {
+                const Icon = service.icon;
+                const isActive = activeService === index;
                 return (
-                  <div key={index} className="flex items-center space-x-6 group">
-                    <div className={`w-16 h-16 ${contact.color} rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                      <Icon className="w-8 h-8" />
-                    </div>
-                    <div>
-                      <h3 className="text-gray-900 font-bold text-xl mb-1">
-                        {contact.title}
+                  <div 
+                    key={index}
+                    className={`group relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 border transition-all duration-500 transform hover:scale-105 overflow-hidden ${
+                      isActive 
+                        ? 'border-purple-400/50 bg-white/10 shadow-2xl shadow-purple-500/20' 
+                        : 'border-white/10 hover:bg-white/10 hover:border-purple-400/30'
+                    }`}
+                  >
+                    {/* Animated background */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`}></div>
+                    
+                    <div className="relative z-10">
+                      <div className="mb-8">
+                        <div className={`w-20 h-20 bg-gradient-to-br ${service.color} rounded-2xl flex items-center justify-center group-hover:shadow-lg transition-all duration-500 transform group-hover:scale-110 group-hover:rotate-3`}>
+                          <Icon className="w-10 h-10 text-white" />
+                        </div>
+                      </div>
+                      
+                      <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-purple-400 group-hover:to-pink-400 group-hover:bg-clip-text transition-all duration-300">
+                        {service.title}
                       </h3>
-                      <p className="text-gray-600 text-lg">
-                        {contact.info}
+                      <p className="text-white/70 leading-relaxed group-hover:text-white/90 transition-colors">
+                        {service.description}
                       </p>
+                      
+                      <div className="mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <button className="text-purple-400 hover:text-purple-300 font-semibold text-sm flex items-center">
+                          Learn More
+                          <ArrowRight className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 );
               })}
+            </div>
 
-              <div className="bg-gray-50 rounded-2xl p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Why Choose Us?</h3>
-                <ul className="space-y-3">
-                  {[
-                    "Fast turnaround times",
-                    "Dedicated project management",
-                    "Post-launch support",
-                    "Competitive pricing"
-                  ].map((item, index) => (
-                    <li key={index} className="flex items-center text-gray-600">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full mr-3"></div>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+            {/* 3D Interactive Cards */}
+            <div className="mt-20">
+              <InteractiveCard3D />
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Section */}
+        <section id="contact" className="py-20 px-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 backdrop-blur-sm border border-cyan-500/20 rounded-full px-4 py-2 mb-6">
+                <Mail className="w-4 h-4 text-cyan-400" />
+                <span className="text-cyan-300 font-medium text-sm">Get In Touch</span>
               </div>
+              <h2 className="text-5xl font-bold text-white mb-6">
+                Let's Conquer
+                <span className="block bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                  Together
+                </span>
+              </h2>
+              <p className="text-white/80 text-xl max-w-3xl mx-auto leading-relaxed">
+                Ready to dominate the digital realm? Let's embark on this cyber conquest together
+              </p>
             </div>
             
-            <div className="bg-gray-50 rounded-3xl p-8">
-              <form className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Name</label>
-                    <input 
-                      type="text" 
-                      className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                      placeholder="Your name"
-                    />
+            <div className="grid lg:grid-cols-2 gap-16">
+              <div className="space-y-8">
+                {[
+                  { icon: Mail, title: "Email Us", info: "hello@teamcyberconqueror.com", color: "from-cyan-500 to-blue-500" },
+                  { icon: Phone, title: "Call Us", info: "+1 (555) 123-4567", color: "from-purple-500 to-pink-500" },
+                  { icon: MapPin, title: "Visit Us", info: "San Francisco, CA", color: "from-green-500 to-emerald-500" }
+                ].map((contact, index) => {
+                  const Icon = contact.icon;
+                  return (
+                    <div key={index} className="flex items-center space-x-6 group">
+                      <div className={`w-16 h-16 bg-gradient-to-r ${contact.color} rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 transform group-hover:scale-110`}>
+                        <Icon className="w-8 h-8 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="text-white font-bold text-xl mb-1 group-hover:text-cyan-300 transition-colors">
+                          {contact.title}
+                        </h3>
+                        <p className="text-white/70 text-lg group-hover:text-white/90 transition-colors">
+                          {contact.info}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+              
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-xl"></div>
+                <div className="relative bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10">
+                  <form className="space-y-6">
+                    <div className="grid md:grid-cols-2 gap-6">
+                      <div>
+                        <input 
+                          type="text" 
+                          placeholder="Your Name" 
+                          className="w-full bg-white/5 border border-white/20 rounded-2xl px-6 py-4 text-white placeholder-white/60 focus:outline-none focus:border-cyan-400 focus:bg-white/10 transition-all duration-300"
+                        />
+                      </div>
+                      <div>
+                        <input 
+                          type="email" 
+                          placeholder="Your Email" 
+                          className="w-full bg-white/5 border border-white/20 rounded-2xl px-6 py-4 text-white placeholder-white/60 focus:outline-none focus:border-cyan-400 focus:bg-white/10 transition-all duration-300"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <input 
+                        type="text" 
+                        placeholder="Project Subject" 
+                        className="w-full bg-white/5 border border-white/20 rounded-2xl px-6 py-4 text-white placeholder-white/60 focus:outline-none focus:border-cyan-400 focus:bg-white/10 transition-all duration-300"
+                      />
+                    </div>
+                    <div>
+                      <textarea 
+                        placeholder="Tell us about your cyber conquest vision..." 
+                        rows={6}
+                        className="w-full bg-white/5 border border-white/20 rounded-2xl px-6 py-4 text-white placeholder-white/60 focus:outline-none focus:border-cyan-400 focus:bg-white/10 transition-all duration-300 resize-none"
+                      />
+                    </div>
+                    <button className="group w-full bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 text-white px-8 py-5 rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 transform hover:scale-105 relative overflow-hidden">
+                      <span className="relative z-10 flex items-center justify-center">
+                        Launch Conquest
+                        <Rocket className="w-6 h-6 ml-3 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      </span>
+                      <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 via-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Footer */}
+        <footer className="py-12 px-4 border-t border-white/10">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
+              <button 
+                onClick={scrollToTop}
+                className="flex items-center space-x-3 group cursor-pointer transition-all duration-300 hover:scale-105"
+              >
+                <div className="relative">
+                  <div className="w-10 h-10 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/25 group-hover:shadow-cyan-500/40 transition-all duration-300">
+                    <Sparkles className="w-6 h-6 text-white animate-pulse" />
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                    <input 
-                      type="email" 
-                      className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                      placeholder="your@email.com"
-                    />
-                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-xl blur-md opacity-50 animate-pulse group-hover:opacity-70 transition-opacity duration-300"></div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Subject</label>
-                  <input 
-                    type="text" 
-                    className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
-                    placeholder="Project subject"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Message</label>
-                  <textarea 
-                    rows={6}
-                    className="w-full bg-white border border-gray-200 rounded-xl px-4 py-3 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300 resize-none"
-                    placeholder="Tell us about your project..."
-                  />
-                </div>
-                <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
-                  <span className="flex items-center justify-center">
-                    Send Message
-                    <ArrowRight className="w-5 h-5 ml-2" />
+                  <span className="text-xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent group-hover:from-cyan-300 group-hover:to-purple-300 transition-all duration-300">
+                    Team CyberConqueror
                   </span>
-                </button>
-              </form>
+                  <div className="text-xs text-cyan-300/70 font-medium group-hover:text-cyan-300/90 transition-colors duration-300">Digital Innovators</div>
+                </div>
+              </button>
+              
+              <div className="flex space-x-6">
+                {[Github, Linkedin].map((Icon, index) => (
+                  <a 
+                    key={index}
+                    href="#" 
+                    className="text-white/60 hover:text-cyan-400 transition-all duration-300 transform hover:scale-110"
+                  >
+                    <Icon className="w-6 h-6" />
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-12 px-4 bg-gray-900 text-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-6 md:space-y-0">
-            <button 
-              onClick={scrollToTop}
-              className="flex items-center space-x-3 group cursor-pointer transition-all duration-300 hover:scale-105"
-            >
-              <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
-                <Sparkles className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <span className="text-xl font-bold">Team CyberConqueror</span>
-                <div className="text-xs text-gray-400 font-medium">Digital Innovators</div>
-              </div>
-            </button>
             
-            <div className="flex space-x-6">
-              {[Github, Linkedin, Mail].map((Icon, index) => (
-                <a 
-                  key={index}
-                  href="#" 
-                  className="text-gray-400 hover:text-white transition-colors transform hover:scale-110"
-                >
-                  <Icon className="w-6 h-6" />
-                </a>
-              ))}
+            <div className="mt-8 pt-8 border-t border-white/10 text-center">
+              <p className="text-white/60">
+                © 2025 Team CyberConqueror. All rights reserved. 
+                <span className="text-cyan-400 ml-2">Made with ❤️ in the digital realm</span>
+              </p>
             </div>
           </div>
-          
-          <div className="mt-8 pt-8 border-t border-gray-800 text-center">
-            <p className="text-gray-400">
-              © 2025 Team CyberConqueror. All rights reserved. 
-              <span className="text-blue-400 ml-2">Made with ❤️ for the digital world</span>
-            </p>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </div>
   );
 }
