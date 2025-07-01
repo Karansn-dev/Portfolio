@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Calendar, Gift, Users } from "lucide-react";
+import ShinyText from "./ShinyText";
 
 interface AchievementCardProps {
   title: string;
@@ -23,17 +24,19 @@ const AchievementCard: React.FC<AchievementCardProps> = ({
 }) => {
   return (
     <motion.div
-      className="relative bg-[rgba(0,0,0,0.2)] backdrop-blur-lg border border-white/10 rounded-[20px] shadow-xl p-6 flex flex-col gap-4 min-w-[320px] max-w-xl min-h-[420px] mx-auto transition-all duration-300 ease-in-out hover:scale-[1.045] hover:shadow-[0_0_48px_12px_rgba(56,189,248,0.45),0_0_64px_16px_rgba(168,85,247,0.25),0_0_0_4px_rgba(255,255,255,0.08)] hover:float-animate"
+      className="relative bg-[rgba(0,0,0,0.18)] backdrop-blur-md border border-white/10 rounded-[20px] shadow-lg p-6 flex flex-col gap-4 min-w-[320px] max-w-xl min-h-[420px] mx-auto transition-all duration-300 ease-in-out hover:scale-[1.045] hover:shadow-[0_0_32px_8px_rgba(56,189,248,0.18)]"
     >
       {/* Header */}
       <div className="flex items-start justify-between gap-2">
-        <div>
+        <div className="flex-1">
           <h3 className="text-lg md:text-xl font-bold mb-1 leading-tight bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent drop-shadow-[0_2px_8px_rgba(56,189,248,0.7)]" style={{textShadow:'0 2px 8px #0e172a88'}}>
             {title}
           </h3>
-          <div className="text-sm text-cyan-100 font-medium mb-1">{event}</div>
+          <div className="flex items-center gap-3 text-sm font-medium mb-1 flex-wrap">
+            <ShinyText text={event} />
+          </div>
         </div>
-        <div className="flex items-center gap-1 text-xs text-cyan-100">
+        <div className="flex items-center gap-1 text-xs text-cyan-100 whitespace-nowrap ml-4 mt-1">
           <Calendar className="w-4 h-4 mr-1 inline-block" />
           {date}
         </div>
@@ -44,7 +47,8 @@ const AchievementCard: React.FC<AchievementCardProps> = ({
           <img
             src={image}
             alt={title}
-            className="object-cover w-full h-full max-h-[320px] rounded-[16px] shadow-[0_4px_16px_rgba(0,0,0,0.3)]"
+            loading="lazy"
+            className="object-cover w-full h-full max-h-[320px] rounded-[16px] shadow-[0_4px_12px_rgba(0,0,0,0.18)]"
             style={{minHeight:'180px'}}
           />
         ) : (

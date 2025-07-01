@@ -204,7 +204,26 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      <Dock />
+      {/* Header */}
+      <header className="fixed top-0 left-0 w-full z-50 bg-white/5 backdrop-blur-lg border-b border-white/10 shadow-md">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
+          <div className="flex items-center gap-3">
+            <span className="inline-flex items-center justify-center w-10 h-10 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-xl shadow-lg shadow-cyan-500/25">
+              <TerminalSquare className="w-6 h-6 text-white" />
+            </span>
+            <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent select-none">CyberConqueror</span>
+          </div>
+          <nav className="hidden md:flex gap-8 text-white/80 font-medium text-base">
+            <a href="#home" className="hover:text-cyan-400 transition-colors">Home</a>
+            <a href="#about" className="hover:text-cyan-400 transition-colors">About</a>
+            <a href="#team" className="hover:text-cyan-400 transition-colors">Team</a>
+            <a href="#services" className="hover:text-cyan-400 transition-colors">Services</a>
+            <a href="#achievements" className="hover:text-cyan-400 transition-colors">Achievements</a>
+            <a href="#projects" className="hover:text-cyan-400 transition-colors">Projects</a>
+            <a href="#contact" className="hover:text-cyan-400 transition-colors">Contact</a>
+          </nav>
+        </div>
+      </header>
       <AnimatedBackground />
       
       {/* Content */}
@@ -218,7 +237,7 @@ function App() {
           <div className="max-w-7xl mx-auto text-center w-full">
             <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
               <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight">
-                <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-pulse">
+                <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent transition-all duration-300 hover:brightness-125 hover:scale-105 cursor-pointer">
                   Team CyberConqueror
                 </span>
                 <br />
@@ -845,7 +864,7 @@ function ProjectCard({ title, description, technologies, imageAlt, github, showI
   return (
     <div
       ref={cardRef}
-      className="relative bg-[rgba(0,0,0,0.2)] backdrop-blur-lg border border-white/10 rounded-[20px] shadow-xl p-6 flex flex-col gap-4 transition-all duration-300 ease-in-out hover:scale-[1.045] hover:shadow-[0_0_24px_6px_rgba(255,255,255,0.12),0_0_32px_8px_rgba(56,189,248,0.10)] hover:float-animate"
+      className="relative bg-[rgba(0,0,0,0.18)] backdrop-blur-md border border-white/10 rounded-[20px] shadow-lg p-6 flex flex-col gap-4 transition-all duration-300 ease-in-out hover:scale-[1.045] hover:shadow-[0_0_32px_8px_rgba(56,189,248,0.18)]"
       style={{}}
     >
       {showImage && (

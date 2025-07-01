@@ -37,25 +37,25 @@ html {
 /* Custom animations */
 @keyframes float {
   0% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+  50% { transform: translateY(-6px); }
   100% { transform: translateY(0); }
 }
 
 @keyframes glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(6, 182, 212, 0.3); }
-  50% { box-shadow: 0 0 30px rgba(6, 182, 212, 0.6); }
+  0%, 100% { box-shadow: 0 0 8px rgba(6, 182, 212, 0.12); }
+  50% { box-shadow: 0 0 14px rgba(6, 182, 212, 0.22); }
 }
 
 .animate-float {
-  animation: float 3s ease-in-out infinite;
+  animation: float 7s ease-in-out infinite;
 }
 
 .animate-glow {
-  animation: glow 2s ease-in-out infinite;
+  animation: glow 6s ease-in-out infinite;
 }
 
 .float-animate {
-  animation: float 2.2s ease-in-out infinite;
+  animation: float 8s ease-in-out infinite;
 }
 
 /* Gradient text animation */
@@ -72,9 +72,9 @@ html {
 
 /* Glass morphism effect */
 .glass {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Cosmic button hover effect */
