@@ -23,12 +23,14 @@ import {
   Smile,
   BadgeCheck,
   TerminalSquare,
-  Send
+  Send,
+  Instagram
 } from 'lucide-react';
 import AnimatedBackground from './components/AnimatedBackground';
 import ScrollFloat from './components/ScrollFloat';
 import Dock from './components/Dock';
 import AchievementCard from './components/AchievementCard';
+import ShinyText from './components/ShinyText';
 
 interface TeamMember {
   id: number;
@@ -50,7 +52,7 @@ const teamMembers: TeamMember[] = [
     role: "ML Developer",
     image: "/krishnav.jpeg",
     bio: "Passionate Machine Learning Developer with expertise in AI/ML algorithms, data science, and building intelligent systems that solve real-world problems.",
-    skills: ["Machine Learning", "Python", "TensorFlow", "Data Science"],
+    skills: ["ML", "Python", "TensorFlow", "Data Science"],
     social: {
       github: "https://github.com/CYBERCONQUEROR",
       linkedin: "https://www.linkedin.com/in/krishnav-talukdar-360059264/"
@@ -271,7 +273,15 @@ function App() {
                           {achievement.label}
                         </div>
                         <div className="text-white/60 text-sm leading-relaxed group-hover:text-white/80 transition-colors">
-                          {achievement.description}
+                          {Array.isArray(achievement.description) ? (
+                            <ul className="list-disc pl-5 space-y-1">
+                              {achievement.description.map((point, idx) => (
+                                <li key={idx}>{point}</li>
+                              ))}
+                            </ul>
+                          ) : (
+                            achievement.description
+                          )}
                         </div>
                         
                         <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -316,14 +326,9 @@ function App() {
                   From concept to launch, we pour our passion into every pixel, every line of code, and every user interaction. We don't just build websites and apps – we create digital experiences that inspire, engage, and conquer the competition.
                 </p>
 
-                <div className="flex flex-wrap gap-4">
-                  {['Innovation', 'Victory', 'Creativity', 'Excellence'].map((value, index) => (
-                    <span 
-                      key={value}
-                      className="bg-gradient-to-r from-cyan-500/10 to-purple-500/10 backdrop-blur-sm border border-cyan-500/20 rounded-full px-6 py-3 text-cyan-300 font-medium"
-                    >
-                      {value}
-                    </span>
+                <div className="flex flex-row gap-2 mt-4 items-center">
+                  {['Innovation', 'Victory', 'Creativity', 'Excellence'].map((value) => (
+                    <ShinyText key={value} text={value} speed={4} className="text-base md:text-xl px-3 md:px-6 py-2 md:py-3 rounded-full flex-shrink-0" />
                   ))}
                 </div>
               </div>
@@ -424,9 +429,12 @@ function App() {
                           {member.skills.slice(0, 3).map((skill) => (
                             <span
                               key={skill}
-                              className="bg-slate-700/50 text-teal-300 px-4 py-1 rounded-full text-xs font-medium border border-slate-600"
+                              className="relative px-4 py-1 rounded-full bg-white/10 border border-cyan-400/30 text-cyan-100 font-semibold text-xs shadow-md backdrop-blur-md transition-all duration-300 cursor-pointer select-none
+                                hover:bg-gradient-to-r hover:from-cyan-400/80 hover:to-purple-500/80 hover:text-white hover:shadow-[0_0_12px_2px_rgba(56,189,248,0.25)]"
+                              style={{ boxShadow: '0 1.5px 4px 0 rgba(168,85,247,0.08)' }}
                             >
-                              {skill}
+                              <span className="absolute inset-0 rounded-full bg-gradient-to-r from-white/40 to-transparent opacity-30 blur-sm pointer-events-none"></span>
+                              <span className="relative z-10">{skill}</span>
                             </span>
                           ))}
                         </div>
@@ -531,27 +539,37 @@ function App() {
         {/* Our Achievements Section */}
         <section id="achievements" className="py-20 px-4 bg-transparent">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center float-animate">
                 Our Achievements
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <AchievementCard
-                title="Best Innovation Team Award – GIH 2.0"
-                event="Galgotias College of Engineering & Technology"
-                date="March 2025"
-                image="/project-placeholder.png"
-                prize="₹10,000 Cash Prize"
-                participants="2,000+"
-                description="Developed Aushadhi AI, a drug discovery toolkit using ML-based IC50 prediction and GenAI summarization. Won in a 36-hour national hackathon."
+                title="Navonmesh: AIdea Challenge 2025"
+                event="Innovation Hub, Dr A.P.J. Abdul Kalam Technical University, Lucknow. Honoured by Hon'ble Governor Smt. Anandiben Patel"
+                date="9th-10th June 2025"
+                image="achievement 1.jpg"
+                prize="₹21,000 Cash Prize"
+                participants="280+"
+                description={[
+                  "Developed in a 24-hour hackathon during the Grand Finale.",
+                  "Real-time ISL translator converting gestures to text & speech.",
+                  "Built with Mediapipe, TensorFlow, and Python.",
+                  "Designed for Indian deaf and mute community."
+                ]}
               />
               <AchievementCard
-                title="1st Place – HackBlitz 2025"
-                event="Google Developer Groups – MMMUT Gorakhpur"
-                date="Feb 2025"
-                image="/project-placeholder.png"
-                prize="₹6,000 Cash Prize"
-                participants="200+"
-                description="Built SpeakSmart, a multilingual speech training platform using Librosa, LLaMA 3, and Murph AI. Integrated with FastAPI, MongoDB, WebSocket & React."
+                title="1ST PLACE – TECHTRIX 2025"
+                event="ITS Engineering College, Greater Noida"
+                date="13th-14th May 2025"
+                image="achievement 2.jpg"
+                prize="₹20,000 Cash Prize"
+                participants="100+"
+                description={[
+                  "Built in a 24-hour hackathon to public complaint management.",
+                  "Flutter, Firebase, Cloudinary, Google Gemini API.",
+                  "Enabled Ai issue detection from (image/voice/text).",
+                  "Integrated auto-location and seamleass complaint workflow."
+                ]}
               />
             </div>
           </div>
@@ -560,53 +578,51 @@ function App() {
         {/* Projects Section */}
         <section id="projects" className="py-20 px-4 bg-transparent">
           <div className="max-w-7xl mx-auto">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center float-animate">
                 Projects
             </h2>
             <div className="grid md:grid-cols-2 gap-10">
               {/* Project 1 */}
               <ProjectCard
-                title="Smart City Dashboard"
-                description="A real-time analytics platform for urban data, enabling city officials to monitor, analyze, and optimize city resources. Features live dashboards, predictive analytics, and citizen engagement tools."
-                achievements={[
-                  'Winner - Smart India Hackathon 2024',
-                  'Implemented predictive analytics for traffic management',
-                  'Recognized by local government for innovation'
+                title="Real-Time ISL Translator"
+                description="An AI-powered real-time sign language translator Specially for Indian People.
+                Uses computer vision and deep learning to recognize gestures and converts signs into text and speech instantly.
+                Ensures privacy and security."
+                technologies={[
+                  'Python','OpenCV','YOLOv8','CNN','React','Mediapipe'
                 ]}
                 imageAlt="Smart City Dashboard Screenshot"
+                github="https://github.com/CYBERCONQUEROR/ISHARA"
               />
               {/* Project 2 */}
               <ProjectCard
-                title="ISRO Space App"
-                description="A mobile app for space enthusiasts to track satellite launches, access ISRO news, and participate in virtual space missions. Includes interactive AR features and educational content."
-                achievements={[
-                  'Finalist - ISRO Hackathon 2025',
-                  "Featured in ISRO's official newsletter",
-                  'Over 10,000 downloads in first month'
+                title="ESP8266 RFID Access Control System "
+                description="A smart, Wi-Fi-enabled door access system . Authorized users can unlock the door by scanning an RFID card or using a secure web interface. All access attempts are logged and notified via Telegram."
+                technologies={[
+                  'ESP8266','RC522 RFID Reader','L298N','Solenoid Lock',
                 ]}
                 imageAlt="ISRO Space App Screenshot"
+                github="https://github.com/CYBERCONQUEROR/ESP8266-RFID-Telegram-Door-Lock-main"
               />
               {/* Project 3 */}
               <ProjectCard
-                title="HealthAI Chatbot"
-                description="An AI-powered chatbot that provides instant health advice, appointment scheduling, and symptom checking. Integrates with local clinics and supports multiple languages."
-                achievements={[
-                  'Top 5 - National Health Innovation Challenge',
-                  'Deployed in 20+ clinics',
-                  'Praised for accessibility and user experience'
+                title="Student Data Viewer App"
+                description=" It is a simple and efficient desktop app built with Kivy and Python, designed to view student data from a CSV file in an interactive and user-friendly way. This project is ideal for managing small student databases where real-time access or filtering is needed."
+                technologies={[
+                 'Python','Kivy','Pandas','Custom fonts',' DLL files',
                 ]}
                 imageAlt="HealthAI Chatbot Screenshot"
+                github="https://github.com/CYBERCONQUEROR/Student-Data-Viewr-App"
               />
               {/* Project 4 */}
               <ProjectCard
-                title="HealthAI Chatbot 2"
-                description="An AI-powered chatbot that provides instant health advice, appointment scheduling, and symptom checking. Integrates with local clinics and supports multiple languages."
-                achievements={[
-                  'Top 5 - National Health Innovation Challenge',
-                  'Deployed in 20+ clinics',
-                  'Praised for accessibility and user experience'
+                title="voice Auction"
+                description="A real-time auction system that allows users to bid live via phone calls while monitoring updates on a web interface. It merges voice bidding with web technology for an interactive experience, featuring live bid tracking and real-time updates."
+                technologies={[
+                'Type Script','HTML','CSS', 'WebRTC', 'Firebase',
                 ]}
                 imageAlt="HealthAI Chatbot Screenshot"
+                github="https://github.com/Karansn-dev/voice-auction-landing"
               />
             </div>
           </div>
@@ -657,10 +673,10 @@ function App() {
                     color: 'from-purple-500 to-pink-500',
                   },
                   {
-                    icon: MapPin,
-                    title: 'Visit Us',
-                    info: 'San Francisco, CA',
-                    color: 'from-green-500 to-emerald-500',
+                    icon: Instagram,
+                    title: 'Instagram',
+                    info: '@_cyberconqueror_',
+                    color: 'from-pink-500 to-yellow-500',
                   },
                 ].map((contact, index) => {
                   const Icon = contact.icon;
@@ -795,13 +811,14 @@ function App() {
 // ProjectCard component (to be placed above App or in a separate file)
 interface ProjectCardProps {
   title: string;
-  description: string;
-  achievements: string[];
+  description: string | string[] | React.ReactNode;
+  technologies: string[];
   imageAlt: string;
+  github: string;
   showImage?: boolean;
 }
 
-function ProjectCard({ title, description, achievements, imageAlt, showImage = false }: ProjectCardProps) {
+function ProjectCard({ title, description, technologies, imageAlt, github, showImage = false }: ProjectCardProps) {
   const cardRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
     if (!cardRef.current) return;
@@ -828,7 +845,8 @@ function ProjectCard({ title, description, achievements, imageAlt, showImage = f
   return (
     <div
       ref={cardRef}
-      className="hover-card bg-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/10 shadow-lg flex flex-col md:flex-row items-center md:items-start gap-8"
+      className="relative bg-[rgba(0,0,0,0.2)] backdrop-blur-lg border border-white/10 rounded-[20px] shadow-xl p-6 flex flex-col gap-4 transition-all duration-300 ease-in-out hover:scale-[1.045] hover:shadow-[0_0_24px_6px_rgba(255,255,255,0.12),0_0_32px_8px_rgba(56,189,248,0.10)] hover:float-animate"
+      style={{}}
     >
       {showImage && (
         <div className="w-32 h-32 md:w-40 md:h-40 bg-gradient-to-br from-cyan-700/30 to-purple-700/30 rounded-2xl flex items-center justify-center overflow-hidden border border-cyan-500/20 mr-0 md:mr-8 mb-6 md:mb-0">
@@ -842,16 +860,54 @@ function ProjectCard({ title, description, achievements, imageAlt, showImage = f
       )}
       <div className="flex-1 w-full">
         <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">{title}</h3>
-        <p className="text-white/80 text-base md:text-lg mb-4">{description}</p>
+        <div className="text-white/80 text-base md:text-lg mb-4">
+          {Array.isArray(description) ? (
+            <ul className="list-disc pl-5 space-y-1">
+              {description.map((point, idx) => (
+                <li key={idx}>{point}</li>
+              ))}
+            </ul>
+          ) : typeof description === 'string' ? (
+            <span style={{ whiteSpace: 'pre-line' }}>{description}</span>
+          ) : (
+            description
+          )}
+        </div>
         <div>
-          <div className="text-cyan-400 font-semibold mb-2">Related Achievements</div>
-          <ul className="list-disc list-inside text-white/70 text-sm md:text-base space-y-1">
-            {achievements.map((ach: string, idx: number) => (
-              <li key={idx}>{ach}</li>
+          <div className="text-cyan-400 font-semibold mb-2">Technologies Used</div>
+          <div className="flex flex-wrap gap-2">
+            {technologies.map((tech: string, idx: number) => (
+              <span
+                key={idx}
+                className="relative px-4 py-1 rounded-full bg-white/10 border border-cyan-400/30 text-cyan-100 font-semibold text-xs shadow-md backdrop-blur-md transition-all duration-300 cursor-pointer select-none
+                  hover:bg-gradient-to-r hover:from-cyan-400/80 hover:to-purple-500/80 hover:text-white hover:shadow-[0_0_12px_2px_rgba(56,189,248,0.25)]"
+                style={{ boxShadow: '0 1.5px 4px 0 rgba(168,85,247,0.08)' }}
+              >
+                <span className="absolute inset-0 rounded-full bg-gradient-to-r from-white/40 to-transparent opacity-30 blur-sm pointer-events-none"></span>
+                <span className="relative z-10">{tech}</span>
+              </span>
             ))}
-          </ul>
+          </div>
+        </div>
+        <div className="mt-4">
+          <a href={github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-cyan-300 hover:text-white font-medium text-sm">
+            <Github className="w-4 h-4" /> GitHub
+          </a>
         </div>
       </div>
+    </div>
+  );
+}
+
+// Mini project card component
+function ProjectMiniCard({ title, description, github }: { title: string; description: string | React.ReactNode; github: string }) {
+  return (
+    <div className="bg-[rgba(0,0,0,0.18)] backdrop-blur-lg border border-white/10 rounded-xl shadow-lg p-4 flex flex-col gap-2 min-w-[220px] max-w-xs transition-all duration-300 hover:scale-105 hover:shadow-cyan-400/30">
+      <div className="font-semibold text-white text-base mb-1">{title}</div>
+      <div className="text-gray-300 text-sm mb-2">{description}</div>
+      <a href={github} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 text-cyan-300 hover:text-white font-medium text-sm mt-auto">
+        <Github className="w-4 h-4" /> GitHub
+      </a>
     </div>
   );
 }

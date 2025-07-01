@@ -36,8 +36,9 @@ html {
 
 /* Custom animations */
 @keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0); }
 }
 
 @keyframes glow {
@@ -51,6 +52,10 @@ html {
 
 .animate-glow {
   animation: glow 2s ease-in-out infinite;
+}
+
+.float-animate {
+  animation: float 2.2s ease-in-out infinite;
 }
 
 /* Gradient text animation */
