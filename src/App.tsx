@@ -31,6 +31,7 @@ import ScrollFloat from './components/ScrollFloat';
 import Dock from './components/Dock';
 import AchievementCard from './components/AchievementCard';
 import ShinyText from './components/ShinyText';
+import MobileDock from "./components/MobileDock";
 
 interface TeamMember {
   id: number;
@@ -224,6 +225,7 @@ function App() {
           </nav>
         </div>
       </header>
+      <MobileDock />
       <AnimatedBackground />
       
       {/* Content */}
