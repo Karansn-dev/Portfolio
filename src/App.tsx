@@ -209,9 +209,11 @@ function App() {
       <header className="fixed top-0 left-0 w-full z-50 bg-white/5 backdrop-blur-lg border-b border-white/10 shadow-md">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
           <div className="flex items-center gap-3">
-            <span className="inline-flex items-center justify-center w-10 h-10 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-xl shadow-lg shadow-cyan-500/25">
-              <TerminalSquare className="w-6 h-6 text-white" />
-            </span>
+            <img
+              src="/logo3.jpg"
+              alt="Team CyberConqueror Logo"
+              className="w-10 h-10 rounded-full object-cover border-2 border-white shadow"
+            />
             <span className="text-2xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent select-none">CyberConqueror</span>
           </div>
           <nav className="hidden md:flex gap-8 text-white/80 font-medium text-base">
@@ -592,6 +594,20 @@ function App() {
                   "Integrated auto-location and seamleass complaint workflow."
                 ]}
               />
+              <AchievementCard
+                title="2ND PLACE – ACE TECH 2025"
+                event="RKGIT Engineering College, Ghaziabad"
+                date="16th May 2025"
+                image="achievement 3.jpg"
+                prize=""
+                participants=""
+                description={[
+                  "We built an AI tool translating ISL gestures to speech/text.",
+                  "It helps India's deaf-mute community communicate more easily.",
+                  "We used machine learning for accurate, real-time gesture recognition.",
+                  "Our goal was to make services inclusive and accessible for all."
+                ]}
+              />
             </div>
           </div>
         </section>
@@ -791,7 +807,11 @@ function App() {
               >
                 <div className="relative">
                   <div className="w-10 h-10 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/25 group-hover:shadow-cyan-500/40 transition-all duration-300">
-                    <TerminalSquare className="w-6 h-6 text-white animate-pulse" />
+                    <img
+                      src="/logo3.jpg"
+                      alt="Team CyberConqueror Logo"
+                      className="w-10 h-10 rounded-full object-cover border-2 border-white shadow animate-pulse"
+                    />
                   </div>
                   <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 rounded-xl blur-md opacity-50 animate-pulse group-hover:opacity-70 transition-opacity duration-300"></div>
                 </div>

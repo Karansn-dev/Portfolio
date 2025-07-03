@@ -30,7 +30,7 @@ function Dock() {
     <>
       {/* Arrow indicator for the Dock */}
       <motion.button
-        className="fixed top-1/2 right-0 z-50 -translate-y-1/2 bg-slate-900/70 border border-cyan-400/10 rounded-l-xl px-1.5 py-2 flex items-center justify-center shadow-md focus:outline-none focus:ring-2 focus:ring-cyan-400/60"
+        className="fixed top-1/2 right-0 z-50 -translate-y-1/2 bg-white/40 backdrop-blur-xl border border-white/30 rounded-l-xl px-1.5 py-2 flex items-center justify-center shadow-lg focus:outline-none focus:ring-2 focus:ring-purple-300/60 transition-all duration-300 hover:scale-105"
         style={{ boxShadow: "0 2px 8px 0 rgba(127,90,240,0.10)" }}
         initial={{ opacity: 0.7, x: 0 }}
         animate={open ? { opacity: 0.2, x: 16 } : { opacity: 0.7, x: 0 }}
@@ -40,14 +40,14 @@ function Dock() {
         onClick={() => setOpen(true)}
         onFocus={() => setOpen(true)}
       >
-        <ChevronLeft className="w-5 h-5 text-cyan-300" />
+        <ChevronLeft className="w-5 h-5 text-purple-400" />
       </motion.button>
       <AnimatePresence>
         <motion.nav
           id="dock-bar"
           role="toolbar"
           aria-label="Main Navigation"
-          className="fixed top-6 right-0 z-50 flex flex-col gap-2 md:gap-3 bg-slate-900/60 border border-cyan-400/10 shadow-lg rounded-l-2xl px-3 py-1 md:px-4 md:py-1.5 backdrop-blur-md min-w-[160px] md:min-w-[180px]"
+          className="fixed top-6 right-0 z-50 flex flex-col gap-2 md:gap-3 bg-white/40 backdrop-blur-2xl border border-white/30 shadow-2xl rounded-l-2xl px-3 py-1 md:px-4 md:py-1.5 min-w-[160px] md:min-w-[180px]"
           style={{ alignItems: "flex-end", minWidth: 140, maxWidth: 'unset' }}
           initial={{ x: '100%' }}
           animate={{ x: open ? 0 : '100%' }}
@@ -73,7 +73,7 @@ function DockItem({ icon: Icon, label, href }: { icon: React.ElementType; label:
   return (
     <motion.a
       href={href}
-      className="group relative flex items-center gap-2 md:gap-3 px-2 py-2 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-400/60 text-white/90 hover:text-cyan-300 overflow-hidden"
+      className="group relative flex items-center gap-2 md:gap-3 px-2 py-2 rounded-xl transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-purple-300/60 text-slate-800 hover:text-purple-600 overflow-hidden bg-white/30 hover:bg-gradient-to-r hover:from-blue-100 hover:to-purple-100 shadow-md backdrop-blur-md"
       style={{ minWidth: 0 }}
       tabIndex={0}
       aria-label={label}
@@ -91,13 +91,13 @@ function DockItem({ icon: Icon, label, href }: { icon: React.ElementType; label:
         animate={hovered ? { width: "100%", opacity: 1 } : { width: 0, opacity: 0 }}
         transition={{ type: "spring", stiffness: 260, damping: 30, duration: 0.35 }}
         style={{
-          background: "linear-gradient(270deg, rgba(127,90,240,0.12) 0%, rgba(92,225,230,0.18) 100%)",
+          background: "linear-gradient(270deg, rgba(127,90,240,0.10) 0%, rgba(92,225,230,0.10) 100%)",
           filter: "blur(2.5px)",
           borderRadius: 10,
         }}
       />
       <span className="relative z-10 flex items-center gap-2 md:gap-3">
-        <Icon className="w-6 h-6 md:w-[22px] md:h-[22px] text-cyan-300" />
+        <Icon className="w-6 h-6 md:w-[22px] md:h-[22px] text-purple-400" />
         <span className="text-[15px] md:text-[16px] font-medium whitespace-nowrap select-none">
           {label}
         </span>

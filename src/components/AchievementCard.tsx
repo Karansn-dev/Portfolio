@@ -28,15 +28,15 @@ const AchievementCard: React.FC<AchievementCardProps> = ({
     >
       {/* Header */}
       <div className="flex items-start justify-between gap-2">
-        <div className="flex-1">
+        <div className="flex-1 min-w-0">
           <h3 className="text-lg md:text-xl font-bold mb-1 leading-tight bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent drop-shadow-[0_2px_8px_rgba(56,189,248,0.7)]" style={{textShadow:'0 2px 8px #0e172a88'}}>
             {title}
           </h3>
-          <div className="flex items-center gap-3 text-sm font-medium mb-1 flex-wrap">
+          <div className="text-sm font-medium mb-1 break-words">
             <ShinyText text={event} />
           </div>
         </div>
-        <div className="flex items-center gap-1 text-xs text-cyan-100 whitespace-nowrap ml-4 mt-1">
+        <div className="flex items-center gap-1 text-xs text-cyan-100 whitespace-nowrap ml-4 mt-1 self-start">
           <Calendar className="w-4 h-4 mr-1 inline-block" />
           {date}
         </div>
@@ -57,14 +57,18 @@ const AchievementCard: React.FC<AchievementCardProps> = ({
       </div>
       {/* Prize & Participants */}
       <div className="flex items-center justify-between gap-4 mt-2 mb-1">
-        <div className="flex items-center gap-2 bg-[rgba(255,255,255,0.08)] backdrop-blur-md border border-white/10 rounded-full px-4 py-1 text-white font-bold text-xs shadow-sm transition-transform duration-200 hover:scale-105 hover:shadow-cyan-400/30" style={{borderRadius:'9999px'}}>
-          <Gift className="w-4 h-4 mr-1" />
-          {prize}
-        </div>
-        <div className="flex items-center gap-2 bg-[rgba(255,255,255,0.08)] backdrop-blur-md border border-white/10 rounded-full px-4 py-1 text-white font-bold text-xs shadow-sm transition-transform duration-200 hover:scale-105 hover:shadow-cyan-400/30" style={{borderRadius:'9999px'}}>
-          <Users className="w-4 h-4 mr-1" />
-          {participants}
-        </div>
+        {prize && (
+          <div className="flex items-center gap-2 bg-[rgba(255,255,255,0.08)] backdrop-blur-md border border-white/10 rounded-full px-4 py-1 text-white font-bold text-xs shadow-sm transition-transform duration-200 hover:scale-105 hover:shadow-cyan-400/30" style={{borderRadius:'9999px'}}>
+            <Gift className="w-4 h-4 mr-1" />
+            {prize}
+          </div>
+        )}
+        {participants && (
+          <div className="flex items-center gap-2 bg-[rgba(255,255,255,0.08)] backdrop-blur-md border border-white/10 rounded-full px-4 py-1 text-white font-bold text-xs shadow-sm transition-transform duration-200 hover:scale-105 hover:shadow-cyan-400/30" style={{borderRadius:'9999px'}}>
+            <Users className="w-4 h-4 mr-1" />
+            {participants}
+          </div>
+        )}
       </div>
       {/* Description */}
       <div className="mt-2">
