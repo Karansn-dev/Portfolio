@@ -31,7 +31,7 @@ import ScrollFloat from './components/ScrollFloat';
 import Dock from './components/Dock';
 import AchievementCard from './components/AchievementCard';
 import ShinyText from './components/ShinyText';
-import MobileDock from "./components/MobileDock";
+import { motion, AnimatePresence, easeInOut } from "framer-motion";
 
 interface TeamMember {
   id: number;
@@ -204,7 +204,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-x-hidden">
       {/* Header */}
       <header className="fixed top-0 left-0 w-full z-50 bg-white/5 backdrop-blur-lg border-b border-white/10 shadow-md">
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
@@ -225,9 +225,39 @@ function App() {
             <a href="#projects" className="hover:text-cyan-400 transition-colors">Projects</a>
             <a href="#contact" className="hover:text-cyan-400 transition-colors">Contact</a>
           </nav>
+          {/* Hamburger button for mobile */}
+          <button
+            className="flex flex-col justify-center items-center w-12 h-12 md:hidden focus:outline-none transition-all duration-300 hover:scale-105 ml-2"
+            aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+            onClick={() => setMobileMenuOpen((v) => !v)}
+          >
+            <motion.span
+              className="block w-5 h-0.5 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded mb-1 shadow-lg shadow-pink-400/40 border border-white"
+              animate={mobileMenuOpen ? "openTop" : "closed"}
+              variants={{
+                closed: { rotate: 0, y: 0, opacity: 1, transition: { duration: 0.18, ease: easeInOut } },
+                openTop: { rotate: 45, y: 8, transition: { duration: 0.18, ease: easeInOut } },
+              }}
+            />
+            <motion.span
+              className="block w-5 h-0.5 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded mb-1 shadow-lg shadow-pink-400/40 border border-white"
+              animate={mobileMenuOpen ? "openMid" : "closed"}
+              variants={{
+                closed: { opacity: 1, transition: { duration: 0.18, ease: easeInOut } },
+                openMid: { opacity: 0, transition: { duration: 0.12, ease: easeInOut } },
+              }}
+            />
+            <motion.span
+              className="block w-5 h-0.5 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded shadow-lg shadow-pink-400/40 border border-white"
+              animate={mobileMenuOpen ? "openBot" : "closed"}
+              variants={{
+                closed: { rotate: 0, y: 0, opacity: 1, transition: { duration: 0.18, ease: easeInOut } },
+                openBot: { rotate: -45, y: -8, transition: { duration: 0.18, ease: easeInOut } },
+              }}
+            />
+          </button>
         </div>
       </header>
-      <MobileDock />
       <AnimatedBackground />
       
       {/* Content */}
@@ -236,11 +266,11 @@ function App() {
         <section
           id="home"
           ref={heroRef}
-          className={`pt-24 pb-20 px-4 min-h-screen flex items-center transition-all duration-700 ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+          className={`pt-16 pb-10 px-2 sm:pt-24 sm:pb-20 sm:px-4 min-h-[70vh] flex items-center transition-all duration-700 ${heroVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
         >
           <div className="max-w-7xl mx-auto text-center w-full">
             <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-              <h1 className="text-6xl md:text-8xl font-bold mb-8 leading-tight">
+              <h1 className="text-3xl sm:text-5xl md:text-8xl font-bold mb-8 leading-tight">
                 <span className="bg-gradient-to-r from-cyan-400 via-purple-500 to-pink-500 bg-clip-text text-transparent transition-all duration-300 hover:brightness-125 hover:scale-105 cursor-pointer">
                   Team CyberConqueror
                 </span>
@@ -270,7 +300,7 @@ function App() {
               </div>
 
               {/* Enhanced Achievement Cards */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-6xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 max-w-6xl mx-auto">
                 {achievements.map((achievement, index) => {
                   const Icon = achievement.icon;
                   return (
@@ -323,10 +353,10 @@ function App() {
         <section
           id="about"
           ref={aboutRef}
-          className={`py-20 px-4 transition-all duration-700 ${aboutVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+          className={`py-10 px-2 sm:py-20 sm:px-4 transition-all duration-700 ${aboutVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
         >
           <div className="max-w-7xl mx-auto">
-            <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
               <div className="space-y-8">
                 <div>
                   <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm border border-purple-500/20 rounded-full px-4 py-2 mb-6">
@@ -349,9 +379,26 @@ function App() {
                   From concept to launch, we pour our passion into every pixel, every line of code, and every user interaction. We don't just build websites and apps – we create digital experiences that inspire, engage, and conquer the competition.
                 </p>
 
-                <div className="flex flex-row gap-2 mt-4 items-center">
+                {/* Mobile: 2x2 grid */}
+                <div className="grid grid-cols-2 gap-2 mt-4 items-stretch justify-center text-center w-full max-w-md mx-auto overflow-visible md:hidden">
                   {['Innovation', 'Victory', 'Creativity', 'Excellence'].map((value) => (
-                    <ShinyText key={value} text={value} speed={4} className="text-base md:text-xl px-3 md:px-6 py-2 md:py-3 rounded-full flex-shrink-0" />
+                    <ShinyText
+                      key={value}
+                      text={value}
+                      speed={4}
+                      className="text-sm sm:text-base px-2 sm:px-3 py-1 sm:py-2 rounded-full flex-shrink-0 text-center min-h-[2.5rem]"
+                    />
+                  ))}
+                </div>
+                {/* Desktop: horizontal flex row */}
+                <div className="hidden md:flex flex-row gap-8 mt-4 items-center justify-between text-center w-full overflow-visible">
+                  {['Innovation', 'Victory', 'Creativity', 'Excellence'].map((value) => (
+                    <ShinyText
+                      key={value}
+                      text={value}
+                      speed={4}
+                      className="text-xl lg:text-2xl px-6 py-3 rounded-full flex-shrink-0 text-center min-h-[2.5rem] lg:min-h-[3rem]"
+                    />
                   ))}
                 </div>
               </div>
@@ -386,7 +433,7 @@ function App() {
         <section
           id="team"
           ref={teamRef}
-          className={`py-20 px-4 transition-all duration-700 ${
+          className={`py-10 px-2 sm:py-20 sm:px-4 transition-all duration-700 ${
             teamVisible
               ? 'opacity-100 translate-y-0'
               : 'opacity-0 translate-y-10'
@@ -411,7 +458,7 @@ function App() {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 justify-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-10 justify-center">
               {teamMembers.map((member, index) => (
                 <div
                   key={member.id}
@@ -429,7 +476,7 @@ function App() {
                           <img
                             src={member.image}
                             alt={member.name}
-                            className="w-32 h-32 rounded-full object-cover ring-4 ring-slate-700/50 transition-all duration-500 group-hover:ring-teal-400"
+                            className="w-24 h-24 sm:w-32 sm:h-32 rounded-full object-cover ring-4 ring-slate-700/50 transition-all duration-500 group-hover:ring-teal-400 mx-auto"
                           />
                           <div className="absolute -bottom-1 -right-1 w-9 h-9 bg-gradient-to-r from-blue-600 to-teal-500 rounded-full flex items-center justify-center border-2 border-slate-800 badge-pulse">
                             <BadgeCheck className="w-5 h-5 text-white" />
@@ -496,7 +543,7 @@ function App() {
         <section
           id="services"
           ref={servicesRef}
-          className={`py-20 px-4 transition-all duration-700 ${servicesVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+          className={`py-10 px-2 sm:py-20 sm:px-4 transition-all duration-700 ${servicesVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
         >
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-16">
@@ -515,7 +562,7 @@ function App() {
               </p>
             </div>
             
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8">
               {services.map((service, index) => {
                 const Icon = service.icon;
                 const isActive = activeService === index;
@@ -560,20 +607,21 @@ function App() {
         </section>
 
         {/* Our Achievements Section */}
-        <section id="achievements" className="py-20 px-4 bg-transparent">
+        <section id="achievements" className="py-10 px-2 sm:py-20 sm:px-4 bg-transparent">
           <div className="max-w-7xl mx-auto">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 text-center float-animate">
                 Our Achievements
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-8">
               <AchievementCard
                 title="Navonmesh: AIdea Challenge 2025"
-                event="Innovation Hub, Dr A.P.J. Abdul Kalam Technical University, Lucknow. Honoured by Hon'ble Governor Smt. Anandiben Patel"
+                event="Innovation Hub, Dr A.P.J. Abdul Kalam Technical University, Lucknow."
                 date="9th-10th June 2025"
                 image="achievement 1.jpg"
                 prize="₹21,000 Cash Prize"
                 participants="280+"
                 description={[
+                  "Honoured by Hon'ble Governor Smt. Anandiben Patel.",
                   "Developed in a 24-hour hackathon during the Grand Finale.",
                   "Real-time ISL translator converting gestures to text & speech.",
                   "Built with Mediapipe, TensorFlow, and Python.",
@@ -845,6 +893,38 @@ function App() {
           </div>
         </footer>
       </div>
+      {/* Hamburger Button for mobile, in header */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            className="fixed inset-0 z-40 bg-white/60 backdrop-blur-sm flex flex-col items-center justify-center space-y-8 md:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18, ease: 'easeInOut' }}
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            {[
+              { label: "Home", href: "#home" },
+              { label: "About", href: "#about" },
+              { label: "Team", href: "#team" },
+              { label: "Services", href: "#services" },
+              { label: "Achievements", href: "#achievements" },
+              { label: "Projects", href: "#projects" },
+              { label: "Contact", href: "#contact" },
+            ].map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                className="text-2xl font-semibold text-slate-800 hover:text-purple-600 transition-colors duration-200 px-6 py-2 rounded-xl bg-white/40 hover:bg-gradient-to-r hover:from-blue-100 hover:to-purple-100 shadow-md backdrop-blur-md"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {item.label}
+              </a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
