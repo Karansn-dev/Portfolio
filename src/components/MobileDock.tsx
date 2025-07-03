@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, easeInOut } from "framer-motion";
 
 const NAV_ITEMS = [
   { label: "Home", href: "#home" },
@@ -16,21 +16,21 @@ const barVariants = {
     rotate: 0,
     y: 0,
     opacity: 1,
-    transition: { type: "spring" as const, stiffness: 400, damping: 30 },
+    transition: { duration: 0.18, ease: easeInOut },
   },
   openTop: {
     rotate: 45,
     y: 8,
-    transition: { type: "spring" as const, stiffness: 400, damping: 30 },
+    transition: { duration: 0.18, ease: easeInOut },
   },
   openMid: {
     opacity: 0,
-    transition: { duration: 0.2 },
+    transition: { duration: 0.12, ease: easeInOut },
   },
   openBot: {
     rotate: -45,
     y: -8,
-    transition: { type: "spring" as const, stiffness: 400, damping: 30 },
+    transition: { duration: 0.18, ease: easeInOut },
   },
 };
 
@@ -41,22 +41,22 @@ function MobileDock() {
     <>
       {/* Hamburger Button */}
       <button
-        className="fixed top-5 right-5 z-50 flex flex-col justify-center items-center w-12 h-12 md:hidden bg-white/30 backdrop-blur-xl rounded-xl shadow-xl border border-white/30 focus:outline-none transition-all duration-300 hover:scale-105"
+        className="fixed top-5 right-5 z-50 flex flex-col justify-center items-center w-12 h-12 md:hidden focus:outline-none transition-all duration-300 hover:scale-105"
         aria-label={open ? "Close menu" : "Open menu"}
         onClick={() => setOpen((v) => !v)}
       >
         <motion.span
-          className="block w-7 h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded mb-1.5 shadow-sm"
+          className="block w-5 h-0.5 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded mb-1 shadow-sm border border-white"
           animate={open ? "openTop" : "closed"}
           variants={barVariants}
         />
         <motion.span
-          className="block w-7 h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded mb-1.5 shadow-sm"
+          className="block w-5 h-0.5 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded mb-1 shadow-sm border border-white"
           animate={open ? "openMid" : "closed"}
           variants={barVariants}
         />
         <motion.span
-          className="block w-7 h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded shadow-sm"
+          className="block w-5 h-0.5 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 rounded shadow-sm border border-white"
           animate={open ? "openBot" : "closed"}
           variants={barVariants}
         />
@@ -65,7 +65,7 @@ function MobileDock() {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-40 bg-white/30 backdrop-blur-2xl flex flex-col items-center justify-center space-y-8 md:hidden shadow-2xl"
+            className="fixed inset-0 z-40 bg-white/60 backdrop-blur-sm flex flex-col items-center justify-center space-y-8 md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

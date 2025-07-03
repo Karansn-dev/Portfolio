@@ -24,7 +24,7 @@ const AchievementCard: React.FC<AchievementCardProps> = ({
 }) => {
   return (
     <motion.div
-      className="relative bg-[rgba(0,0,0,0.18)] backdrop-blur-md border border-white/10 rounded-[20px] shadow-lg p-6 flex flex-col gap-4 min-w-[320px] max-w-xl min-h-[420px] mx-auto transition-all duration-300 ease-in-out hover:scale-[1.045] hover:shadow-[0_0_32px_8px_rgba(56,189,248,0.18)]"
+      className="relative bg-[rgba(0,0,0,0.18)] backdrop-blur-md border border-white/10 rounded-[20px] shadow-lg p-6 flex flex-col gap-4 min-w-[320px] max-w-xl min-h-[420px] mx-auto transition-all duration-300 ease-in-out hover:scale-[1.045] hover:shadow-[0_0_32px_8px_rgba(56,189,248,0.18)] sm:p-6 p-2"
     >
       {/* Header */}
       <div className="flex items-start justify-between gap-2">
@@ -32,8 +32,15 @@ const AchievementCard: React.FC<AchievementCardProps> = ({
           <h3 className="text-lg md:text-xl font-bold mb-1 leading-tight bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent drop-shadow-[0_2px_8px_rgba(56,189,248,0.7)]" style={{textShadow:'0 2px 8px #0e172a88'}}>
             {title}
           </h3>
-          <div className="text-sm font-medium mb-1 break-words">
-            <ShinyText text={event} />
+          <div
+            className="flex w-full min-w-0 items-center px-0 py-1 mb-2 mt-1 md:px-4 md:bg-white/5 md:backdrop-blur-sm md:border md:border-white/10 md:rounded-lg"
+            style={{ fontFamily: 'Inter, Manrope, sans-serif' }}
+          >
+            <span
+              className="flex-1 text-[clamp(0.95rem,2.5vw,1.08rem)] font-semibold text-left text-white/90 tracking-tight leading-snug break-words min-w-0 px-2 md:px-0"
+            >
+              <ShinyText text={event} className="w-full text-left" />
+            </span>
           </div>
         </div>
         <div className="flex items-center gap-1 text-xs text-cyan-100 whitespace-nowrap ml-4 mt-1 self-start">
